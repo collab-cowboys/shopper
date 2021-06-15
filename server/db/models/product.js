@@ -17,7 +17,7 @@ const Product = db.define("product", {
     type: Sequelize.INTEGER,
   },
   skills: {
-    type: Sequelize.ARRAY,
+    type: Sequelize.ARRAY(Sequelize.STRING),
     defaultValue: [],
   },
   cost: {
