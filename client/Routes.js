@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Login, Signup } from './components/AuthForm';
+import AuthForm from './components/AuthForm';
 import Home from './components/Home';
 import Welcome from './components/Welcome';
 import SingleProduct from './components/SingleProduct';
@@ -34,8 +34,8 @@ const Routes = () => {
       ) : (
         <Switch>
           <Route path="/" exact component={Welcome} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
+          <Route path="/login" render={() => <AuthForm name="login" />} />
+          <Route path="/signup" render={() => <AuthForm name="signup" /> } />
           <Route path="/products/:id" component={SingleProduct} />
           <Route path="/products" component={AllProducts} />
           <Route path="/cart" component={Cart} />
