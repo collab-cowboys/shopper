@@ -15,10 +15,6 @@ const User = db.define("user", {
   password: {
     type: Sequelize.STRING,
   },
-  cartId: {
-    type: Sequelize.INTEGER,
-    defaultValue: null,
-  },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
