@@ -11,7 +11,6 @@ const Product = db.define("product", {
   },
   gender: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
   },
   age: {
