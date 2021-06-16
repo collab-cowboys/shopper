@@ -29,7 +29,8 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "wait-for-expect": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -42,6 +43,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "esm": "^3.2.25",
+    "jsdom": "^16.6.0",
     "mocha": "^6.2.3",
     "nodemon": "^1.19.4",
     "react": "^16.8.6",
