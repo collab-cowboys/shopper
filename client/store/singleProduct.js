@@ -27,6 +27,7 @@ const singleProductSlice = createSlice({
     imageUrl: "",
   },
   reducers: {
+    // no reducers required at this time!
     // setSingleProduct: (state, action) => {
     //   return action.payload;
     // },
