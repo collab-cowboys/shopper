@@ -1,12 +1,13 @@
-import axios from "axios";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const loadAllProducts = createAsyncThunk(
-  "allProducts/load",
-  async () => {
+  'allProducts/load',
+  async (arg, thunkAPI) => {
+    const { dispatch } = thunkAPI;
     try {
-      const response = await axios.get("/api/products");
-      return response.data;
+      const response = await axios.get('/api/products');
+      dispatch(setAllProducts(response.data));
     } catch (error) {
       console.log(error);
     }
@@ -14,15 +15,10 @@ export const loadAllProducts = createAsyncThunk(
 );
 
 const allProductSlice = createSlice({
-  name: "allProducts",
+  name: 'allProducts',
   initialState: [],
   reducers: {
     setAllProducts: (state, action) => {
-      return action.payload;
-    },
-  },
-  extraReducers: {
-    [load.fufilled]: (state, action) => {
       return action.payload;
     },
   },
