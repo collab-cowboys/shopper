@@ -7,6 +7,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const getSingleProduct = createAsyncThunk("api/products/:id", async (id) => {
   try {
     const { data } = await axios.get(`/api/products/${id}`);
+    //dispatch(setSingleProduct(data))
     return data;
   } catch (error) {
     console.log(error);
@@ -27,10 +28,10 @@ const singleProductSlice = createSlice({
     imageUrl: "",
   },
   reducers: {
-    // no reducers required at this time!
-    // setSingleProduct: (state, action) => {
-    //   return action.payload;
-    // },
+    // we will probably require this thunk afterall
+    setSingleProduct: (state, action) => {
+      return action.payload;
+    },
   },
   extraReducers: {
     [getSingleProduct.fulfilled]: (state, action) => {
@@ -40,5 +41,6 @@ const singleProductSlice = createSlice({
 })
 
 
+export const { setSingleProduct } = singleProductSlice.actions;
 
 export default singleProductSlice.reducer;
