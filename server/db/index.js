@@ -2,7 +2,7 @@
 
 const db = require('./db')
 
-const User = require('./models/User') // should this be lowercase u?
+const User = require('./models/user')
 const Product = require('./models/product')
 
 //associations could go here!
