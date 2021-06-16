@@ -32,9 +32,10 @@ async function getNames(reqGender) {
 const getSkills = (numSkills) => {
   let result = [];
   for (let i = 0; i < numSkills; i++) {
-    result.push(skills[Math.floor(Math.random() * (skills.length - 1))])
+    const skillsLeft = skills.filter(skill => !result.includes(skill));
+    result.push(skillsLeft[Math.floor(Math.random() * skills.length)]);
   }
-  return result
+  return result;
 }
 
 async function getOldie() {
