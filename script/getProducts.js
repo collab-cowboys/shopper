@@ -33,7 +33,7 @@ const getSkills = (numSkills) => {
   let result = [];
   for (let i = 0; i < numSkills; i++) {
     const skillsLeft = skills.filter(skill => !result.includes(skill));
-    result.push(skillsLeft[Math.floor(Math.random() * skills.length)]);
+    result.push(skillsLeft[Math.floor(Math.random() * skillsLeft.length)]);
   }
   return result;
 }
