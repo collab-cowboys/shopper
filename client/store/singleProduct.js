@@ -20,7 +20,7 @@ export const getSingleProduct = createAsyncThunk("api/products/:id", async (id) 
 const singleProductSlice = createSlice({
   name: "singleProduct",
   initialState: {},
-    name: "",
+ 
   reducers: {
     // we will probably require this thunk afterall
     setSingleProduct: (state, action) => {
