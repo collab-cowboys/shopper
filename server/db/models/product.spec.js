@@ -39,7 +39,6 @@ describe("Product Model and API Routes", () => {
       const product = Product.build({});
       try {
         await product.validate();
-        throw Error("requires name and gender");
       } catch (err) {
       expect(err.message).to.contain('name cannot be null')
       expect(err.message).to.contain('gender cannot be null')
