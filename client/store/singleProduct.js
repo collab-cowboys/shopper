@@ -19,14 +19,8 @@ export const getSingleProduct = createAsyncThunk("api/products/:id", async (id) 
  */
 const singleProductSlice = createSlice({
   name: "singleProduct",
-  initialState: {
+  initialState: {},
     name: "",
-    gender: "",
-    age: 0,
-    skills: [],
-    cost: 0,
-    imageUrl: "",
-  },
   reducers: {
     // we will probably require this thunk afterall
     setSingleProduct: (state, action) => {
