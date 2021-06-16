@@ -35,7 +35,7 @@ describe("Product Model and API Routes", () => {
       );
     });
 
-    it("*** requires name, gender", async () => {
+    it("requires name, gender", async () => {
       const product = Product.build({});
       try {
         await product.validate();
