@@ -6,7 +6,6 @@ const Product = db.define("product", {
   // name, gender, age, skills, cost, imageUrl
   name: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
   },
   gender: {
