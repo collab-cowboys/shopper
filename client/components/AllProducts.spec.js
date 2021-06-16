@@ -47,8 +47,6 @@ describe("AllProducts", () => {
       allProducts.update();
 
       const reduxLength = store.getState().allProducts.length;
-      console.log(reduxLength);
-      console.log(store.getState());
       expect(allProducts.find("li")).to.have.lengthOf(reduxLength);
     }, 1500);
   });
