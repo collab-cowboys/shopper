@@ -1,17 +1,17 @@
-import axios from 'axios';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import history from '../history';
+import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import history from "../history";
 
-const TOKEN = 'token';
+const TOKEN = "token";
 
 /**
  * THUNK CREATORS
  */
-export const me = createAsyncThunk('auth/me', async () => {
+export const me = createAsyncThunk("auth/me", async () => {
   try {
     const token = window.localStorage.getItem(TOKEN);
     if (token) {
-      const res = await axios.get('/auth/me', {
+      const res = await axios.get("/auth/me", {
         headers: {
           authorization: token,
         },
@@ -24,12 +24,15 @@ export const me = createAsyncThunk('auth/me', async () => {
 });
 
 export const authenticate = createAsyncThunk(
-  'auth/authenticate',
+  "auth/authenticate",
   async (arg, thunkAPI) => {
-    const { username, password, formName: method } = arg;
+    const { username, password, formName: method, email } = arg;
     const { dispatch } = thunkAPI;
     try {
-      const res = await axios.post(`/auth/${method}`, { username, password });
+      const res =
+        method === "signup"
+          ? await axios.post(`/auth/${method}`, { username, password, email })
+          : await axios.post(`/auth/${method}`, { username, password });
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
     } catch (authError) {
@@ -38,9 +41,9 @@ export const authenticate = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk('auth/logout', () => {
+export const logout = createAsyncThunk("auth/logout", () => {
   window.localStorage.removeItem(TOKEN);
-  history.push('/login');
+  // history.push("/login");
   return {};
 });
 
@@ -48,7 +51,7 @@ export const logout = createAsyncThunk('auth/logout', () => {
  * REDUCER
  */
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {},
   reducers: {
     setAuth: (state, action) => {

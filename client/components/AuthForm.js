@@ -9,9 +9,9 @@ const AuthForm = (props) => {
   const { name } = props;
   let displayName;
   if (name === "login") {
-     displayName = "Login";
+    displayName = "Login";
   } else if (name === "signup") {
-     displayName = "Sign Up";
+    displayName = "Sign Up";
   }
   const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
@@ -20,7 +20,12 @@ const AuthForm = (props) => {
     const formName = evt.target.name;
     const username = evt.target.username.value;
     const password = evt.target.password.value;
-    dispatch(authenticate({ username, password, formName }));
+    if (name === "signup") {
+      const email = evt.target.email.value;
+      dispatch(authenticate({ username, password, formName, email }));
+    } else {
+      dispatch(authenticate({ username, password, formName }));
+    }
   };
 
   return (
@@ -32,6 +37,16 @@ const AuthForm = (props) => {
           </label>
           <input name="username" type="text" />
         </div>
+        {name === "signup" ? (
+          <div>
+            <label htmlFor="email">
+              <small>Email</small>
+            </label>
+            <input name="email" type="email" />
+          </div>
+        ) : (
+          <div></div>
+        )}
         <div>
           <label htmlFor="password">
             <small>Password</small>
@@ -55,6 +70,4 @@ const AuthForm = (props) => {
  *   can stay DRY with interfaces that are very similar to each other!
  */
 
-
 export default AuthForm;
-
