@@ -7,8 +7,7 @@ export const getCartProducts = createAsyncThunk(
     const { dispatch } = thunkAPI;
     try {
       const response = await axios.get("/api/carts");
-      console.log("!!!", response.data);
-      dispatch({ type: "cartProducts/get", payload: response.data });
+      dispatch({type: 'cartProducts/setCartProducts', payload: response.data});
     } catch (error) {
       console.log(error);
     }
