@@ -3,7 +3,7 @@ const axios = require("axios");
 
 async function getInfo() {
   const { data } = await axios.get(
-    `https://randomuser.me/api/?inc=name&nat=US&email`
+    `https://randomuser.me/api/?inc=login&nat=US&email`
   );
   const { results } = data;
   const { login: { username }, email  } = results[0];
@@ -13,10 +13,10 @@ async function getInfo() {
 async function produceUsers(userVolume) {
 const seedUsers = [];
     for (let i = 0; i < userVolume; i++) {
-    seedProducts.push(await getInfo());
+    seedUsers.push(await getInfo());
   }
-  return seedProducts
+  return seedUsers
 }
 
 
-module.exports = { produceProducts };
+module.exports = { produceUsers };

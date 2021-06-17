@@ -21,7 +21,7 @@ async function seed() {
   console.log("db synced!");
 
   // Creating Users
-  const tempUsers = await produceProducts(numberOfUsers);
+  const tempUsers = await produceUsers(numberOfUsers);
   const users = await Promise.all(tempUsers.map(async (user) => await User.create(user)));
 
   // Creating Products
