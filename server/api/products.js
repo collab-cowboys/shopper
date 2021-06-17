@@ -1,11 +1,15 @@
-const router = require("express").Router();
-const Product = require("../db/models/product");
+const router = require('express').Router();
+const Product = require('../db/models/product');
 
 // GET /api/products
 
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    res.send(await Product.findAll());
+    res.send(
+      await Product.findAll({
+        order: [['id', 'ASC']],
+      })
+    );
   } catch (error) {
     next(error);
   }
@@ -20,6 +24,6 @@ router.get('/:id', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 module.exports = router;
