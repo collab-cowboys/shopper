@@ -11,8 +11,8 @@ const Transaction = require('./models/transaction');
 Order.belongsTo(User);
 User.hasMany(Order);
 
-Product.belongsToMany(Order, { through: 'transactions' });
-Order.belongsToMany(Product, { through: 'transactions' });
+Product.belongsToMany(Order, { through: Transaction });
+Order.belongsToMany(Product, { through: Transaction });
 
 module.exports = {
   db,
