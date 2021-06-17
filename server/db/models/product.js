@@ -1,8 +1,8 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
-const axios = require("axios");
+const Sequelize = require('sequelize');
+const db = require('../db');
+const axios = require('axios');
 
-const Product = db.define("product", {
+const Product = db.define('product', {
   // name, gender, age, skills, cost, imageUrl
   name: {
     type: Sequelize.STRING,
@@ -25,10 +25,11 @@ const Product = db.define("product", {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue:
-      "https://static.vecteezy.com/system/resources/previews/001/196/554/large_2x/person-png.png",
+      'https://static.vecteezy.com/system/resources/previews/001/196/554/large_2x/person-png.png',
   },
   inStock: {
     type: Sequelize.INTEGER,
+    defaultValue: 1,
     validate: {
       min: 0,
     },
