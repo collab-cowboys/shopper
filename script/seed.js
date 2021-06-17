@@ -13,16 +13,15 @@ const { produceProducts } = require("./getProducts");
  */
 
 const numberOfProducts = 20
+const numberOfUsers = 10
 
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
   // Creating Users
-  const users = await Promise.all([
-    User.create({ username: "cody", password: "123" }),
-    User.create({ username: "murphy", password: "123" }),
-  ]);
+  const tempUsers = await produceProducts(numberOfUsers);
+  const users = await Promise.all(tempUsers.map(async (user) => await User.create(user)));
 
   // Creating Products
   const tempProducts = await produceProducts(numberOfProducts);
