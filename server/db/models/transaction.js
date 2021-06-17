@@ -11,9 +11,7 @@ const Transaction = db.define('transaction', {
   },
   totalPrice: {
     type: Sequelize.INTEGER,
-    validate: {
-      min: 1,
-    },
+allowNull: false,
   },
 });
 module.exports = Transaction;
