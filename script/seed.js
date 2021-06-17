@@ -12,8 +12,8 @@ const { produceUsers } = require("./getUsers");
  *      match the models, and populates the database.
  */
 
-const numberOfProducts = 20
-const numberOfUsers = 10
+const numberOfProducts = 20;
+const numberOfUsers = 10;
 
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
@@ -21,13 +21,27 @@ async function seed() {
 
   // Creating Users
   const tempUsers = await produceUsers(numberOfUsers);
-  const users = await Promise.all(tempUsers.map(async (user) => await User.create(user)));
+  const users = await Promise.all(
+    tempUsers.map(async (user) => await User.create(user))
+  );
 
   // Creating Products
   const tempProducts = await produceProducts(numberOfProducts);
-  const products = await Promise.all(tempProducts.map(async (product) => await Product.create(product)));
+  const products = await Promise.all(
+    tempProducts.map(async (product) => await Product.create(product))
+  );
 
+  // Create Order
+  const orderNoUserNoItems = await Order.create();
+  const orderWithUserNoItems = await Order.create({ userId: 1 });
+  const orderWithUserWithItems = await Order.create({ userId: 2 });
 
+  const prod1 = await Product.findByPk(3);
+  const prod2 = await Product.findByPk(5);
+  const prod3 = await Product.findByPk(7);
+
+  await orderWithUserWithItems.addProducts([prod3], {through: {quantity: 2, totalPrice: prod3.cost * 2}});
+  await orderWithUserWithItems.addProduct(prod1, {through: {quantity: 1, totalPrice: prod1.cost * 1}});
 
   console.log(`seeded ${products.length} users`);
   console.log(`seeded successfully`);
