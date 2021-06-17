@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getSingleProduct } from '../store/singleProduct';
 
 const SingleProduct = (props) => {
@@ -15,14 +16,17 @@ const SingleProduct = (props) => {
 
   return (
     <div>
-      <img src={imageUrl} alt="photo" />
-      <p>{name}</p>
-      <p>
-        {age}, {gender}
-      </p>
-      <p>Special skills: {skills.map((skill) => skill).join(', ')}</p>
-      <p>${cost}</p>
-      <p>{inStock} left in stock</p>
+      <div>
+        <img src={imageUrl} alt="photo" />
+        <p>{name}</p>
+        <p>
+          {age}, {gender}
+        </p>
+        <p>Special skills: {skills.map((skill) => skill).join(', ')}</p>
+        <p>${cost}</p>
+        <p>{inStock} left in stock</p>
+      </div>
+      <Link to="/products">&lt;&lt;&lt; Back</Link>
     </div>
   );
 };
