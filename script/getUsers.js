@@ -1,22 +1,23 @@
-const axios = require("axios");
-
+const axios = require('axios');
 
 async function getInfo() {
   const { data } = await axios.get(
-    `https://randomuser.me/api/?inc=login&nat=US&email`
+    `https://randomuser.me/api/?inc=login,email&nat=US`
   );
   const { results } = data;
-  const { login: { username }, email  } = results[0];
-  return {username, email, password: 'password' };
+  const {
+    login: { username },
+    email,
+  } = results[0];
+  return { username, email, password: 'password' };
 }
 
 async function produceUsers(userVolume) {
-const seedUsers = [];
-    for (let i = 0; i < userVolume; i++) {
+  const seedUsers = [];
+  for (let i = 0; i < userVolume; i++) {
     seedUsers.push(await getInfo());
   }
-  return seedUsers
+  return seedUsers;
 }
-
 
 module.exports = { produceUsers };
