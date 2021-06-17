@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getSingleProduct } from "../store/singleProduct";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getSingleProduct } from '../store/singleProduct';
 
 const SingleProduct = (props) => {
-  const { name, gender, imageUrl } = useSelector(
+  let { name, age, gender, skills, cost, imageUrl, inStock } = useSelector(
     (state) => state.singleProduct
   );
+  skills = skills || [];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,8 +16,13 @@ const SingleProduct = (props) => {
   return (
     <div>
       <img src={imageUrl} alt="photo" />
-      <div>{name}</div>
-      <div>{gender}</div>
+      <p>{name}</p>
+      <p>
+        {age}, {gender}
+      </p>
+      <p>Special skills: {skills.map((skill) => skill).join(', ')}</p>
+      <p>${cost}</p>
+      <p>{inStock} left in stock</p>
     </div>
   );
 };
