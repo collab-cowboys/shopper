@@ -27,6 +27,12 @@ const Product = db.define("product", {
     defaultValue:
       "https://static.vecteezy.com/system/resources/previews/001/196/554/large_2x/person-png.png",
   },
+  inStock: {
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0,
+    },
+  },
 });
 
 module.exports = Product;
