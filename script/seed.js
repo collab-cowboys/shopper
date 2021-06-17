@@ -6,6 +6,7 @@ const {
 } = require("../server/db");
 const Product = require("../server/db/models/product");
 const { produceProducts } = require("./getProducts");
+const { produceUsers } = require("./getUsers");
 
 /**
  * seed - this function clears the database, updates tables to
