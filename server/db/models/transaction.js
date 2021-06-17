@@ -1,17 +1,15 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
-const axios = require('axios');
+const Sequelize = require("sequelize");
+const db = require("../db");
+const axios = require("axios");
 
-const Transaction = db.define('transaction', {
+const Transaction = db.define("transaction", {
   quantity: {
     type: Sequelize.INTEGER,
-    validate: {
-      min: 1,
-    },
+    defaultValue: 1,
   },
   totalPrice: {
     type: Sequelize.INTEGER,
-allowNull: false,
+    allowNull: false,
   },
 });
 module.exports = Transaction;
