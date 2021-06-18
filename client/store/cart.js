@@ -22,11 +22,6 @@ const cartSlice = createSlice({
       return action.payload;
     },
   },
-  // extraReducers: {
-  //   [getCartProducts.fulfilled]: (state, action) => {
-  //     return action.payload;
-  //   },
-  // },
 });
 
 export const { setCartProducts } = cartSlice.actions;
