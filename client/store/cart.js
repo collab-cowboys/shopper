@@ -1,13 +1,29 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+// export const getCartProducts = createAsyncThunk(
+//   "cartProducts/get",
+//   async (arg, thunkAPI) => {
+//     const { dispatch } = thunkAPI;
+//     try {
+//       const response = await axios.get("/api/carts");
+//       dispatch({type: 'cartProducts/setCartProducts', payload: response.data});
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
+// );
 
 export const getCartProducts = createAsyncThunk(
-  "cartProducts/get",
+  'cartProducts/get',
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
     try {
-      const response = await axios.get("/api/carts");
-      dispatch({type: 'cartProducts/setCartProducts', payload: response.data});
+      const cartJson = window.localStorage.getItem('cart');
+      if (cartJson) {
+        const cartObj = JSON.parse(cartJson);
+        dispatch({ type: 'cartProducts/setCartProducts', payload: cartObj });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -15,7 +31,7 @@ export const getCartProducts = createAsyncThunk(
 );
 
 const cartSlice = createSlice({
-  name: "cartProducts",
+  name: 'cartProducts',
   initialState: {},
   reducers: {
     setCartProducts: (state, action) => {
