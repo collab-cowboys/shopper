@@ -9,11 +9,6 @@ const Cart = () => {
     dispatch(getCartProducts());
   }, []);
 
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getCartProducts());
-  // });
 
   return <div>CART PLACEHOLDER</div>;
 };
