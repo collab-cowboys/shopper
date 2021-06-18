@@ -9,7 +9,6 @@ const AddToCart = (props) => {
   const cart = useSelector((state) => state.cart);
   const handleClick = (product, quantity) => {
     const totalPrice = product.cost * quantity;
-    const { name } = product;
     const newCart = JSON.stringify({
       ...cart,
       [product.name]: { product, quantity, totalPrice },
