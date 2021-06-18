@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Routes from './Routes';
+import React, { useEffect } from "react";
+import Navbar from "./components/Navbar";
+import Routes from "./Routes";
 
 const App = () => {
   useEffect(() => {
-    window.localStorage.setItem('cart', '{}');
+    const cart = window.localStorage.getItem("cart");
+    if (!cart) {
+      window.localStorage.setItem("cart", "{}");
+    }
   }, []);
 
   return (
