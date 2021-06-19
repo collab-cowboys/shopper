@@ -42,7 +42,7 @@ export const authenticate = createAsyncThunk(
 );
 
 export const handleLogout = createAsyncThunk(
-  "auth/logout",
+  "auth/handleLogout",
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
     await dispatch(logout());
