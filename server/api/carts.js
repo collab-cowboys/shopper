@@ -20,7 +20,7 @@ router.get("/:orderId", async (req, res, next) => {
   }
 });
 
-//post a Cart
+//POST /api/carts
 
 router.post("/", async (req, res, next) => {
   try {
