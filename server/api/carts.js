@@ -22,17 +22,11 @@ router.get('/:orderId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const { userId, transactions } = req.body;
+    const { newUser, transactions } = req.body;
     const newOrder = await Order.create();
-    const userToAttach = await User.findByPk(userId);
-    newOrder.setUser(userToAttach);
-    Object.keys(transactions).forEach(async (transactionKey) => {
-      const { product, quantity, totalPrice } = transactions[transactionKey];
-      const fetchedProduct = await Product.findByPk(product.id);
-      await newOrder.addProduct(fetchedProduct, {
-        through: { quantity: quantity, totalPrice: totalPrice },
-      });
-    });
+    const { username, email, password } = newUser;
+    await newOrder.assignNewUser(username, email, password);
+    await newOrder.assignTransactions(transactions);
     res.status(201).send(newOrder);
   } catch (error) {
     next(error);
