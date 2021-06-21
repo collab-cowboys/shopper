@@ -5,7 +5,6 @@ const {
 const userKeeper = async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    console.log("!!!!!");
     if (!user) {
       const guestErr = new Error("User must be logged in to access");
       guestErr.status = 401;
