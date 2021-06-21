@@ -6,7 +6,10 @@ const CartEntry = (props) => {
     <tr>
       <td>
         <span>{name}</span>
-        <img src={imageUrl} />
+        <img
+          src={imageUrl}
+          style={({ width: 'auto' }, { height: 75 + 'px' })}
+        />
       </td>
       <td>
         <span>{quantity}</span>
