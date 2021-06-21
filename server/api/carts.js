@@ -10,7 +10,7 @@ router.get('/:orderId', async (req, res, next) => {
   try {
     res.send(
       await Order.findByPk(req.params.orderId, {
-        include: Transaction,
+        include: Product,
       })
     );
   } catch (error) {
