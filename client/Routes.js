@@ -7,6 +7,7 @@ import Welcome from './components/Welcome';
 import SingleProduct from './components/SingleProduct';
 import AllProducts from './components/AllProducts';
 import Cart from './components/Cart';
+import CheckedOut from './components/CheckedOut';
 import { me } from './store';
 
 /**
@@ -35,10 +36,11 @@ const Routes = () => {
         <Switch>
           <Route path="/" exact component={Welcome} />
           <Route path="/login" render={() => <AuthForm name="login" />} />
-          <Route path="/signup" render={() => <AuthForm name="signup" /> } />
+          <Route path="/signup" render={() => <AuthForm name="signup" />} />
           <Route path="/products/:id" component={SingleProduct} />
           <Route path="/products" component={AllProducts} />
           <Route path="/cart" component={Cart} />
+          <Routh path="/checkedout" component={CheckedOut} />
         </Switch>
       )}
     </div>
