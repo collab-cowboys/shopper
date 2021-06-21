@@ -15,7 +15,6 @@ router.get("/", userKeeper, adminKeeper, async (req, res, next) => {
     });
     res.json(users);
   } catch (err) {
-    console.log("!!!!!!!!!!!!!!");
     next(err);
   }
 });
