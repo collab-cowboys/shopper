@@ -19,7 +19,6 @@ const userKeeper = async (req, res, next) => {
 const adminKeeper = async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
-    console.log("user", user);
     if (!user.isAdmin) {
       const userErr = new Error("User must have admin privileges");
       userErr.status = 403;
