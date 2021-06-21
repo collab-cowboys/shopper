@@ -35,7 +35,7 @@ const Cart = () => {
           })}
         </tbody>
       </table>
-      <button type="button">Login &amp; Checkout</button>
+      <button type="button">Sign Up &amp; Checkout</button>
       <button type="button">Checkout as Guest</button>
     </div>
   );
