@@ -13,7 +13,6 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:orderId", async (req, res, next) => {
   try {
-    console.log("req.params", req.params)
     res.send(await Transaction.findByPk(req.params.orderId));
   } catch (error) {
     next(error);
