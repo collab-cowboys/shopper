@@ -6,10 +6,10 @@ async function getInfo() {
   );
   const { results } = data;
   const {
-    login: { username },
+    login: { username, password },
     email,
   } = results[0];
-  return { username, email, password: 'password' };
+  return { username, email, password };
 }
 
 async function produceUsers(userVolume) {
