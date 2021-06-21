@@ -1,20 +1,18 @@
-const router = require("express").Router();
-const Transaction = require("../db/models/transaction");
+const router = require('express').Router();
+const Order = require('../db/models/order');
+const User = require('../db/models/user');
+const Transaction = require('../db/models/transaction');
+const Product = require('../db/models/product');
 
-
-router.get("/", async (req, res, next) => {
-  try {
-    res.send(await Transaction.findAll());
-  } catch (error) {
-    next(error);
-  }
-});
 //GET api/carts/:id
 
-router.get("/:orderId", async (req, res, next) => {
+router.get('/:orderId', async (req, res, next) => {
   try {
-    console.log("req.params", req.params)
-    res.send(await Transaction.findByPk(req.params.orderId));
+    res.send(
+      await Order.findByPk(req.params.orderId, {
+        include: Transaction,
+      })
+    );
   } catch (error) {
     next(error);
   }
@@ -22,11 +20,22 @@ router.get("/:orderId", async (req, res, next) => {
 
 //POST /api/carts
 
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    res.status(201).send(await Transaction.create(req.body));
+    const { userId, transactions } = req.body;
+    const newOrder = await Order.create();
+    const userToAttach = await User.findByPk(userId);
+    newOrder.setUser(userToAttach);
+    Object.keys(transactions).forEach(async (transactionKey) => {
+      const { product, quantity, totalPrice } = transactions[transactionKey];
+      const fetchedProduct = await Product.findByPk(product.id);
+      await newOrder.addProduct(fetchedProduct, {
+        through: { quantity: quantity, totalPrice: totalPrice },
+      });
+    });
+    res.status(201).send(newOrder);
   } catch (error) {
-    next(err);
+    next(error);
   }
 });
 
