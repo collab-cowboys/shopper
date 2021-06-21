@@ -41,9 +41,17 @@ export const authenticate = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", () => {
+export const handleLogout = createAsyncThunk(
+  "auth/handleLogout",
+  async (arg, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    await dispatch(logout());
+    history.push("/");
+  }
+);
+
+const logout = createAsyncThunk("auth/logout", () => {
   window.localStorage.removeItem(TOKEN);
-  // history.push("/login");
   return {};
 });
 

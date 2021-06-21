@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../store";
+import { handleLogout } from "../store";
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
   const handleClick = () => {
-    dispatch(logout());
+    dispatch(handleLogout());
   };
   return (
     <div>
