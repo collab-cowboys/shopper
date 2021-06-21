@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-//get 1 api/cart/:id
+//GET api/carts/:id
 
 router.get("/:orderId", async (req, res, next) => {
   try {
