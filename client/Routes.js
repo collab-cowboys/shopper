@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import AuthForm from './components/AuthForm';
-import Home from './components/Home';
-import Welcome from './components/Welcome';
-import SingleProduct from './components/SingleProduct';
-import AllProducts from './components/AllProducts';
-import Cart from './components/Cart';
-import CheckedOut from './components/CheckedOut';
-import { me } from './store';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import AuthForm from "./components/AuthForm";
+import Home from "./components/Home";
+import Welcome from "./components/Welcome";
+import SingleProduct from "./components/SingleProduct";
+import AllProducts from "./components/AllProducts";
+import Cart from "./components/Cart";
+import CheckedOut from "./components/CheckedOut";
+import { me } from "./store";
 
 /**
  * COMPONENT
@@ -40,7 +40,7 @@ const Routes = () => {
           <Route path="/products/:id" component={SingleProduct} />
           <Route path="/products" component={AllProducts} />
           <Route path="/cart" component={Cart} />
-          <Routh path="/checkedout" component={CheckedOut} />
+          <Route path="/checkedout" component={CheckedOut} />
         </Switch>
       )}
     </div>
