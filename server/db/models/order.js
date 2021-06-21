@@ -15,7 +15,8 @@ module.exports = Order;
  * instanceMethods
  */
 Order.prototype.assignNewUser = async function (username, email, password) {
-  const { data } = await axios.post('http://localhost:8080/auth/signup', {
+  const urlPath = process.env.URL_PATH || 'http://localhost:8080';
+  const { data } = await axios.post(urlPath + '/auth/signup', {
     username,
     email,
     password,
