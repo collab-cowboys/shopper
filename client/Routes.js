@@ -40,7 +40,7 @@ const Routes = () => {
           <Route path="/products/:id" component={SingleProduct} />
           <Route path="/products" component={AllProducts} />
           <Route path="/cart" component={Cart} />
-          <Routh path="/checkedout" component={CheckedOut} />
+          <Route path="/checkedout" component={CheckedOut} />
         </Switch>
       )}
     </div>
