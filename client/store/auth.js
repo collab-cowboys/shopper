@@ -55,7 +55,7 @@ const authSlice = createSlice({
   initialState: {},
   reducers: {
     setAuth: (state, action) => {
-      return action.auth;
+      return action.payload;
     },
   },
   extraReducers: {
