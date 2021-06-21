@@ -25,7 +25,7 @@ const Cart = () => {
             const { id, name, imageUrl } = cart[transaction].product;
             return (
               <CartEntry
-                id={id}
+                key={id}
                 name={name}
                 imageUrl={imageUrl}
                 quantity={cart[transaction].quantity}
