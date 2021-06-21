@@ -30,7 +30,7 @@ const Navbar = () => {
         )}
         <span>
           <Link to="/products">All Grandparents</Link>
-          <span>My Cart</span>
+          <Link to="/cart">My Cart</Link>
         </span>
       </nav>
       <hr />
