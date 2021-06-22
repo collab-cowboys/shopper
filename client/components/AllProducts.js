@@ -15,15 +15,16 @@ const AllProducts = () => {
 
   return (
     <div>
+      Check out our range of Grandroid® models:
       <ul>
         {allProducts.map((product) => {
           return (
             <li key={product.id}>
               <Link to={`/products/${product.id}`}>
                 <img src={product.imageUrl} />
-                <p>{product.name}</p>
+                <p>The {product.name}</p>
               </Link>
-              <p>${product.cost}/day</p>
+              <p>${product.cost}</p>
               <AddToCart product={product} quantity={1} />
             </li>
           );
