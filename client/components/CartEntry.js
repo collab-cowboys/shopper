@@ -1,10 +1,12 @@
 import React from "react";
-import { deleteCartProducts } from "../store/cart";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {changeProductInCartQuantity, deleteCartProducts } from '../store/cart'
 
 const CartEntry = (props) => {
   const dispatch = useDispatch();
   const { name, imageUrl, quantity, totalPrice } = props;
+  const dispatch = useDispatch();
+
   return (
     <tr>
       <td>
@@ -16,8 +18,8 @@ const CartEntry = (props) => {
       </td>
       <td>
         <span>{quantity}</span>
-        <button type="button">+</button>
-        <button type="button">-</button>
+        <button type="button" onClick={() => dispatch(changeProductInCartQuantity({name, changeValue: 1}))}>+</button>
+        <button type="button" onClick={() => dispatch(changeProductInCartQuantity({name, changeValue: -1}))}>-</button>
       </td>
       <td>
         <button

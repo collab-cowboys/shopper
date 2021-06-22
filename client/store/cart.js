@@ -17,6 +17,36 @@ export const getCartProducts = createAsyncThunk(
   }
 );
 
+export const changeProductInCartQuantity = createAsyncThunk(
+  "cartProducts/update",
+  async (arg, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    const { name, changeValue } = arg;
+    try {
+      const cartJson = window.localStorage.getItem("cart");
+      if (cartJson) {
+        const cartObj = JSON.parse(cartJson);
+        //loop through obj find by name(key), quantity += changeValue
+        Object.entries(cartObj).forEach(([key, value]) => {
+          if (key === name) {
+            value.quantity += changeValue;
+            value.totalPrice = value.quantity * value.product.cost;
+          }
+        });
+        window.localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            ...cartObj,
+          })
+        );
+        dispatch({ type: "cartProducts/setCartProducts", payload: cartObj });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const deleteCartProducts = createAsyncThunk(
   "cartProducts/delete",
   async (arg, thunkAPI) => {
