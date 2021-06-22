@@ -41,7 +41,7 @@ const getSkills = (numSkills) => {
 async function getOldie() {
   const whatGender = getGender();
   const { data } = await axios.get(
-    `https://fakeface.rest/face/json?gender=${whatGender}&minimum_age=60`
+    `https://fakeface.rest/face/json?gender=${whatGender}&minimum_age=65`
   );
   const { age, image_url: imageUrl } = data;
   return {
