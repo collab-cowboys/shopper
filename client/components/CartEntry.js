@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {changeProductInCartQuantity} from '../store/cart'
+import {changeProductInCartQuantity, deleteCartProducts } from '../store/cart'
 
 const CartEntry = (props) => {
+  const dispatch = useDispatch();
   const { name, imageUrl, quantity, totalPrice } = props;
   const dispatch = useDispatch();
 
@@ -21,7 +22,12 @@ const CartEntry = (props) => {
         <button type="button" onClick={() => dispatch(changeProductInCartQuantity({name, changeValue: -1}))}>-</button>
       </td>
       <td>
-        <button type="button">X</button>
+        <button
+          type="button"
+          onClick={() => dispatch(deleteCartProducts({ name: name }))}
+        >
+          X
+        </button>
       </td>
       <td>
         <span>{totalPrice}</span>

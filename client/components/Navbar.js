@@ -6,8 +6,10 @@ import { handleLogout } from "../store";
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
+  const name = useSelector((state) => state.auth.username);
   const handleClick = () => {
     dispatch(handleLogout());
+  
   };
   return (
     <div>
@@ -16,7 +18,7 @@ const Navbar = () => {
         {isLoggedIn ? (
           <span>
             {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
+            <span>Logged in as {name}</span>
             <a href="#" onClick={handleClick}>
               Logout
             </a>

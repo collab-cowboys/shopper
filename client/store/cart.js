@@ -26,7 +26,6 @@ export const changeProductInCartQuantity = createAsyncThunk(
       const cartJson = window.localStorage.getItem("cart");
       if (cartJson) {
         const cartObj = JSON.parse(cartJson);
-
         //loop through obj find by name(key), quantity += changeValue
         Object.entries(cartObj).forEach(([key, value]) => {
           if (key === name) {
@@ -44,6 +43,35 @@ export const changeProductInCartQuantity = createAsyncThunk(
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+);
+
+export const deleteCartProducts = createAsyncThunk(
+  "cartProducts/delete",
+  async (arg, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    try {
+      const cartJson = window.localStorage.getItem("cart");
+      const { name } = arg;
+      if (cartJson) {
+        let cartObj = JSON.parse(cartJson);
+        let newObj = {};
+        Object.entries(cartObj).forEach(([key, value]) => {
+          if (key !== name) {
+            newObj[key] = value;
+          }
+        });
+        window.localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            ...newObj,
+          })
+        );
+        dispatch({ type: "cartProducts/setCartProducts", payload: newObj });
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 );
