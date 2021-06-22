@@ -1,4 +1,5 @@
 const axios = require('axios');
+require('dotenv').config()
 
 async function getInfo() {
   const { data } = await axios.get(
@@ -17,6 +18,10 @@ async function produceUsers(userVolume) {
   for (let i = 0; i < userVolume; i++) {
     seedUsers.push(await getInfo());
   }
+
+  const admin = {username: process.env.ADMIN_USERNAME, email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD, isAdmin: true}
+  seedUsers.push(admin)
+
   return seedUsers;
 }
 
