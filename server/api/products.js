@@ -37,4 +37,14 @@ router.delete("/:id", adminKeeper, async (req, res, next) => {
   }
 });
 
+//POST /api/products/
+router.post("/", adminKeeper, async (req, res, next) => {
+  try {
+    const newProduct = await Product.create(req.body);
+    res.status(201).send(newProduct);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
