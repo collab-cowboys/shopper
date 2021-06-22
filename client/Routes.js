@@ -18,7 +18,7 @@ const Routes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
 
   const loadInitialData = () => {
-    dispatch(me);
+    dispatch(me());
   };
 
   useEffect(() => {
@@ -42,16 +42,16 @@ const Routes = () => {
           </Route>
           <Route path="/products/:id">
             <SingleProduct />
-          </Route>  
+          </Route>
           <Route path="/products">
             <AllProducts />
-          </Route>  
+          </Route>
           <Route path="/cart">
             <Cart />
-          </Route>  
+          </Route>
           <Route path="/checkedout">
              <CheckedOut />
-          </Route> 
+          </Route>
         </Switch>
     </div>
   );
