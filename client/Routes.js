@@ -27,19 +27,14 @@ const Routes = () => {
 
   return (
     <div>
-      {isLoggedIn ? (
-        <Switch>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Redirect to="/home" />
-        </Switch>
-      ) : (
         <Switch>
           <Route exact path="/">
              <Welcome />
           </Route>
-          <Route path="/login">
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Route path="/login"> 
             <AuthForm name="login" />
           </Route>
           <Route path="/signup">
@@ -58,7 +53,6 @@ const Routes = () => {
              <CheckedOut />
           </Route>
         </Switch>
-      )}
     </div>
   );
 };
