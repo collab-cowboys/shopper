@@ -5,7 +5,7 @@ const Welcome = () => {
     <div>
       <h1>Welcome to the Grand-Shoppe!</h1>
       <p>
-        Need a hug? A cookie? A bedtime story? Our trained professionals are
+        Need a hug? A cookie? A bedtime story? Our state-of-the-art Grandroids® are
         full of Big Grandparent Energy and ready to work with you to fulfill
         your grandparenting needs!
       </p>

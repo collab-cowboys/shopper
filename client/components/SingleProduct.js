@@ -20,7 +20,7 @@ const SingleProduct = (props) => {
     <div>
       <div>
         <img src={imageUrl} alt="photo" />
-        <p>{name}</p>
+        <p>The {name}</p>
         <p>
           {age}, {gender}
         </p>
