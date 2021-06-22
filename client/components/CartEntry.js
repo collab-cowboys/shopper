@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import {changeProductInCartQuantity, deleteCartProducts } from '../store/cart'
 
 const CartEntry = (props) => {
-  const dispatch = useDispatch();
   const { name, imageUrl, quantity, totalPrice } = props;
   const dispatch = useDispatch();
 
