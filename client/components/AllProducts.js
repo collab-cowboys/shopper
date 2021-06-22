@@ -24,7 +24,7 @@ const AllProducts = () => {
                 <p>{product.name}</p>
               </Link>
               <p>${product.cost}/day</p>
-              <AddToCart product={product} quantity={1} />
+              <AddToCart product={product} />
             </li>
           );
         })}
