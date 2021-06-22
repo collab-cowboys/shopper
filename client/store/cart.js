@@ -27,7 +27,7 @@ export const changeProductInCartQuantity = createAsyncThunk(
       if (cartJson) {
         const cartObj = JSON.parse(cartJson);
 
-        //loop through obj find by name(key), quantiy += changeValue
+        //loop through obj find by name(key), quantity += changeValue
         Object.entries(cartObj).forEach(([key, value]) => {
           if (key === name) {
             value.quantity += changeValue;
