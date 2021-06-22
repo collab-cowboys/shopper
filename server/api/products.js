@@ -46,7 +46,9 @@ router.post("/", adminKeeper, async (req, res, next) => {
     res.status(201).send(newProduct);
   } catch (err) {
     next(err);
-    
+  }
+});
+
 //PUT /api/products/:id
 router.put("/:id", adminKeeper, async (req, res, next) => {
   try {
