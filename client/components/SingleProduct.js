@@ -9,16 +9,17 @@ const SingleProduct = (props) => {
   let { name, age, gender, skills, cost, imageUrl, inStock } = product;
   skills = skills || [];
   const dispatch = useDispatch();
+  const {id} = useParams();
 
   useEffect(() => {
-    dispatch(getSingleProduct(props.match.params.id));
+    dispatch(getSingleProduct(id));
   }, []);
 
   return (
     <div>
       <div>
         <img src={imageUrl} alt="photo" />
-        <p>{name}</p>
+        <p>The {name}</p>
         <p>
           {age}, {gender}
         </p>
