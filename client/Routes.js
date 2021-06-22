@@ -29,18 +29,34 @@ const Routes = () => {
     <div>
       {isLoggedIn ? (
         <Switch>
-          <Route path="/home" component={Home} />
+          <Route path="/home">
+            <Home />
+          </Route>
           <Redirect to="/home" />
         </Switch>
       ) : (
         <Switch>
-          <Route path="/" exact component={Welcome} />
-          <Route path="/login" render={() => <AuthForm name="login" />} />
-          <Route path="/signup" render={() => <AuthForm name="signup" />} />
-          <Route path="/products/:id" component={SingleProduct} />
-          <Route path="/products" component={AllProducts} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/checkedout" component={CheckedOut} />
+          <Route exact path="/">
+             <Welcome />
+          </Route>
+          <Route path="/login"> 
+            <AuthForm name="login" />
+          </Route>
+          <Route path="/signup">
+            <AuthForm name="signup" />
+          </Route>
+          <Route path="/products/:id">
+            <SingleProduct />
+          </Route>  
+          <Route path="/products">
+            <AllProducts />
+          </Route>  
+          <Route path="/cart">
+            <Cart />
+          </Route>  
+          <Route path="/checkedout">
+             <CheckedOut />
+          </Route> 
         </Switch>
       )}
     </div>
