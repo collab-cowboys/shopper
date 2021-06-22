@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require('axios');
 
 const skills = [
   'drinking',
@@ -11,12 +11,12 @@ const skills = [
   'crosswords',
   'gardening',
   'walking slowly',
-  'tinkering'
-]
+  'tinkering',
+];
 
 const getGender = () => {
   const num = Math.floor(Math.random() * 2);
-  const result = num ? "female" : "male";
+  const result = num ? 'female' : 'male';
   return result;
 };
 
@@ -32,11 +32,11 @@ async function getNames(reqGender) {
 const getSkills = (numSkills) => {
   let result = [];
   for (let i = 0; i < numSkills; i++) {
-    const skillsLeft = skills.filter(skill => !result.includes(skill));
+    const skillsLeft = skills.filter((skill) => !result.includes(skill));
     result.push(skillsLeft[Math.floor(Math.random() * skillsLeft.length)]);
   }
   return result;
-}
+};
 
 async function getOldie() {
   const whatGender = getGender();
@@ -49,18 +49,18 @@ async function getOldie() {
     gender: whatGender,
     age,
     skills: getSkills(Math.round(Math.random() + 3)),
-    cost: Math.ceil((Math.random() * 10000)/1000)*100,
+    cost: Math.ceil((Math.random() * 10000) / 1000) * 100,
+    inStock: Math.ceil(Math.random() * 30) + 10,
     imageUrl,
   };
 }
 
 async function produceProducts(productVolume) {
-const seedProducts = [];
-    for (let i = 0; i < productVolume; i++) {
+  const seedProducts = [];
+  for (let i = 0; i < productVolume; i++) {
     seedProducts.push(await getOldie());
   }
-  return seedProducts
+  return seedProducts;
 }
-
 
 module.exports = { produceProducts };
