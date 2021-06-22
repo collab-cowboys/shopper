@@ -28,6 +28,8 @@ const AddToCart = (props) => {
       <input
         type="number"
         value={quantity}
+        min="1"
+        max="10"
         onChange={(evt) => setQuantity(evt.target.value)}
       />
     </div>
