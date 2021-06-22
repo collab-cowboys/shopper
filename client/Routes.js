@@ -31,6 +31,9 @@ const Routes = () => {
           <Route exact path="/">
              <Welcome />
           </Route>
+          <Route path="/home">
+            <Home />
+          </Route>
           <Route path="/login"> 
             <AuthForm name="login" />
           </Route>
