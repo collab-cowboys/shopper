@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { getSingleProduct } from "../store/singleProduct";
-import AddToCart from "./AddToCart";
-
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getSingleProduct } from '../store/singleProduct';
+import AddToCart from './AddToCart';
 
 const SingleProduct = (props) => {
   const product = useSelector((state) => state.singleProduct);
@@ -24,10 +23,10 @@ const SingleProduct = (props) => {
         <p>
           {age}, {gender}
         </p>
-        <p>Special skills: {skills.map((skill) => skill).join(", ")}</p>
+        <p>Special skills: {skills.map((skill) => skill).join(', ')}</p>
         <p>${cost}</p>
         <p>{inStock} left in stock</p>
-        <AddToCart product={product} quantity={1} />
+        <AddToCart product={product} />
       </div>
       <Link to="/products">&lt;&lt;&lt; Back</Link>
     </div>

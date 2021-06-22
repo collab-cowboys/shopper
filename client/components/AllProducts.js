@@ -25,7 +25,8 @@ const AllProducts = () => {
                 <p>The {product.name}</p>
               </Link>
               <p>${product.cost}</p>
-              <AddToCart product={product} quantity={1} />
+              <AddToCart product={product} />
+
             </li>
           );
         })}
