@@ -39,8 +39,15 @@ router.delete("/:id", adminKeeper, async (req, res, next) => {
   }
 });
 
+//POST /api/products/
+router.post("/", adminKeeper, async (req, res, next) => {
+  try {
+    const newProduct = await Product.create(req.body);
+    res.status(201).send(newProduct);
+  } catch (err) {
+    next(err);
+    
 //PUT /api/products/:id
-
 router.put("/:id", adminKeeper, async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id);
