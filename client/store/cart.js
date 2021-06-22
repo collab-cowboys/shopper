@@ -29,7 +29,7 @@ export const changeProductInCartQuantity = createAsyncThunk(
         //loop through obj find by name(key), quantity += changeValue
         Object.entries(cartObj).forEach(([key, value]) => {
           if (key === name) {
-            value.quantity += changeValue;
+            value.quantity = parseInt(value.quantity, 10) + changeValue;
             value.totalPrice = value.quantity * value.product.cost;
           }
         });
