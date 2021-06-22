@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getSingleProduct } from '../store/singleProduct';
 import AddToCart from './AddToCart';
 
@@ -9,7 +9,7 @@ const SingleProduct = (props) => {
   let { name, age, gender, skills, cost, imageUrl, inStock } = product;
   skills = skills || [];
   const dispatch = useDispatch();
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
