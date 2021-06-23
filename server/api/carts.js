@@ -47,8 +47,30 @@ router.put("/:orderId", async (req, res, next) => {
         transaction.update({quantity, totalPrice});
         res.send(transaction).status(201);
         return;
+      }  
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+//DELETE /api/carts/:id
+
+router.delete("/:orderId", async (req, res, next) => {
+  try {
+    const { orderId, productId } = req.body;
+    const transactions = await Transaction.findAll();
+    transactions.forEach((transaction) => {
+      if (
+        transaction.productId === productId &&
+        transaction.orderId === orderId
+      ) {
+        transaction.destroy();
+        res.sendStatus(204);
+        return;
       }
     });
+    res.send("No Transaction with such paramaters!!!");
   } catch (err) {
     next(err);
   }
