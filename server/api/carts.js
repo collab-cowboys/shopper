@@ -44,7 +44,7 @@ router.put("/:orderId", async (req, res, next) => {
         transaction.dataValues.orderId === orderId &&
         transaction.dataValues.productId === productId
       ) {
-        transaction.update(req.body);
+        transaction.update(quantity, totalPrice);
         res.send(transaction).status(201);
         return;
       }
