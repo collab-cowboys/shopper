@@ -1,28 +1,18 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getCartProducts } from '../store/cart';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { addItemToCart } from "../store/cart";
 
 const AddToCart = (props) => {
   const { product } = props;
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const handleClick = (product, quantity) => {
-    const totalPrice = product.cost * quantity;
-    const newCart = JSON.stringify({
-      ...cart,
-      [product.name]: { product, quantity, totalPrice },
-    });
+  const isLoggedIn = useSelector((state) => state.auth).id !== undefined;
 
-    window.localStorage.setItem('cart', newCart);
-    dispatch(getCartProducts());
-    //todo: add logic for logged-in user
-  };
-  const handleChange = (evt) => {};
   return (
     <div>
-      <button type="button" onClick={() => handleClick(product, quantity)}>
+      <button type="button" onClick={() => dispatch(addItemToCart({cart, product, quantity, isLoggedIn}))}>
         Add To Cart
       </button>
       <input

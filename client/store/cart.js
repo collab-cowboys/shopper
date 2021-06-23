@@ -1,12 +1,45 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const addItemToCart = createAsyncThunk(
+  "cartProducts/get",
+  async (arg, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    const { cart, product, quantity, isLoggedIn } = arg;
+    try {
+      if (isLoggedIn) {
+        const loggedCart = { ...cart };
+        loggedCart[product.id] = parseInt(quantity);
+        console.log("loggedCart", loggedCart);
+        dispatch({ type: "cartProducts/setCartProducts", payload: loggedCart });
+      } else {
+        const tempCart = window.localStorage.getItem("cart");
+        if (tempCart) {
+          const storageCart = JSON.parse(tempCart);
+          guestCart = { ...storageCart };
+          console.log(`guestCart`, guestCart);
+          guestCart[product.id] = parseInt(quantity);
+          console.log(`guestCart`, guestCart);
+          const newCart = JSON.stringify(guestCart);
+          window.localStorage.setItem("cart", newCart);
+          dispatch({
+            type: "cartProducts/setCartProducts",
+            payload: guestCart,
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const getCartProducts = createAsyncThunk(
   "cartProducts/get",
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
     try {
-      const cartJson = window.localStorage.getItem("cart");
+      const cart = window.localStorage.getItem("cart");
       if (cartJson) {
         const cartObj = JSON.parse(cartJson);
         dispatch({ type: "cartProducts/setCartProducts", payload: cartObj });
