@@ -25,17 +25,26 @@ module.exports = Transaction;
  */
 // no instance methods for now, but we will add them here if we need any
 /**
- 
+
  * classMethods
  */
 
-Transaction.findByOrderIdAndProductId = async function (orderId, productId) {
+Transaction.findByOrderId = async function (orderId) {
   const transactionData = await this.findAll({
+    where: {
+      orderId: orderId,
+    },
+  });
+  return transactionData.dataValues;
+};
+
+Transaction.findByOrderIdAndProductId = async function (orderId, productId) {
+  const transactionData = await this.findOne({
     where: {
       orderId: orderId,
       productId: productId,
     },
   });
-  const foundTransaction = transactionData[0].dataValues;
+  const foundTransaction = transactionData.dataValues;
   return foundTransaction;
 };
