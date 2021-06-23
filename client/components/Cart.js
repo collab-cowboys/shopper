@@ -6,6 +6,7 @@ import CartEntry from "./CartEntry";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,8 +50,14 @@ const Cart = () => {
               })}
             </tbody>
           </table>
-          <button type="button">Sign Up &amp; Checkout</button>
-          <button type="button">Checkout as Guest</button>
+          {isLoggedIn ? (
+            <button type="button">Checkout</button>
+          ) : (
+            <div>
+              <button type="button">Sign Up &amp; Checkout</button>
+              <button type="button">Checkout as Guest</button>
+            </div>
+          )}
         </div>
       ) : (
         <div>
