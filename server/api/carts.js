@@ -41,8 +41,8 @@ router.delete("/:orderId", async (req, res, next) => {
     const transactions = await Transaction.findAll();
     transactions.map((transaction) => {
       if (
-        transaction.dataValues.productId === productId &&
-        transaction.dataValues.orderId === orderId
+        transaction.productId === productId &&
+        transaction.orderId === orderId
       ) {
         transaction.destroy();
         res.sendStatus(204);
