@@ -40,18 +40,15 @@ const getSkills = (numSkills) => {
 
 async function getOldie() {
   const whatGender = getGender();
-  const { data } = await axios.get(
-    `https://fakeface.rest/face/json?gender=${whatGender}&minimum_age=65`
-  );
-  const { age, image_url: imageUrl } = data;
+  const randomString = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
   return {
     name: await getNames(whatGender),
     gender: whatGender,
-    age,
+    age: Math.ceil(Math.random() * 10) + 60,
     skills: getSkills(Math.round(Math.random() + 3)),
     cost: Math.ceil((Math.random() * 10000) / 1000) * 100,
     inStock: Math.ceil(Math.random() * 30) + 10,
-    imageUrl,
+    imageUrl : `https://robohash.org/${randomString}.png`
   };
 }
 

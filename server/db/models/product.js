@@ -25,7 +25,7 @@ const Product = db.define('product', {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue:
-      'https://static.vecteezy.com/system/resources/previews/001/196/554/large_2x/person-png.png',
+      "https://robohash.org/name.png",
   },
   inStock: {
     type: Sequelize.INTEGER,
