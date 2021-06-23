@@ -1,12 +1,12 @@
-const router = require('express').Router();
-const Order = require('../db/models/order');
-const User = require('../db/models/user');
-const Transaction = require('../db/models/transaction');
-const Product = require('../db/models/product');
+const router = require("express").Router();
+const Order = require("../db/models/order");
+const User = require("../db/models/user");
+const Transaction = require("../db/models/transaction");
+const Product = require("../db/models/product");
 
 //GET api/carts/:id
 
-router.get('/:orderId', async (req, res, next) => {
+router.get("/:orderId", async (req, res, next) => {
   try {
     res.send(
       await Order.findByPk(req.params.orderId, {
@@ -20,7 +20,7 @@ router.get('/:orderId', async (req, res, next) => {
 
 //POST /api/carts
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { newUser, transactions } = req.body;
     const newOrder = await Order.create();
@@ -33,4 +33,25 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+//DELETE /api/carts/:id
+
+router.delete("/:orderId", async (req, res, next) => {
+  try {
+    const { orderId, productId } = req.body;
+    const transactions = await Transaction.findAll();
+    transactions.map((transaction) => {
+      if (
+        transaction.dataValues.productId === productId &&
+        transaction.dataValues.orderId === orderId
+      ) {
+        transaction.destroy();
+        res.sendStatus(204);
+        return;
+      }
+    });
+    res.send("No Transaction with such paramaters!!!");
+  } catch (err) {
+    next(err);
+  }
+});
 module.exports = router;
