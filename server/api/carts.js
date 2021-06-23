@@ -33,6 +33,27 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+//PUT /api/carts/:id
+
+router.put("/:orderId", async (req, res, next) => {
+  try {
+    const { orderId, productId, quantity, totalPrice } = req.body;
+    const transactions = await Transaction.findAll();
+    transactions.map((transaction) => {
+      if (
+        transaction.dataValues.orderId === orderId &&
+        transaction.dataValues.productId === productId
+      ) {
+        transaction.update({quantity, totalPrice});
+        res.send(transaction).status(201);
+        return;
+      }  
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 //DELETE /api/carts/:id
 
 router.delete("/:orderId", async (req, res, next) => {
@@ -54,4 +75,5 @@ router.delete("/:orderId", async (req, res, next) => {
     next(err);
   }
 });
+
 module.exports = router;
