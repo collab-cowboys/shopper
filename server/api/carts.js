@@ -4,14 +4,12 @@ const User = require("../db/models/user");
 const Transaction = require("../db/models/transaction");
 const Product = require("../db/models/product");
 
-//GET api/carts/:id
+//GET api/carts/user/:userId
 
-router.get("/:orderId", async (req, res, next) => {
+router.get("/user/:userId", async (req, res, next) => {
   try {
     res.send(
-      await Order.findByPk(req.params.orderId, {
-        include: Product,
-      })
+      await Order.locateActiveOrder(req.params.userId)
     );
   } catch (error) {
     next(error);
@@ -22,11 +20,10 @@ router.get("/:orderId", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { newUser, transactions } = req.body;
+    const {userId} = req.body;
     const newOrder = await Order.create();
-    const { username, email, password } = newUser;
-    await newOrder.assignNewUser(username, email, password);
-    await newOrder.assignTransactions(transactions);
+    const user = await User.findByPk(userId)
+    await newOrder.setUser(user)
     res.status(201).send(newOrder);
   } catch (error) {
     next(error);
@@ -47,7 +44,7 @@ router.put("/:orderId", async (req, res, next) => {
         transaction.update({quantity, totalPrice});
         res.send(transaction).status(201);
         return;
-      }  
+      }
     });
   } catch (err) {
     next(err);
