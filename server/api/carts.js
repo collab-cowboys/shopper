@@ -1,17 +1,15 @@
-const router = require('express').Router();
-const Order = require('../db/models/order');
-const User = require('../db/models/user');
-const Transaction = require('../db/models/transaction');
-const Product = require('../db/models/product');
+const router = require("express").Router();
+const Order = require("../db/models/order");
+const User = require("../db/models/user");
+const Transaction = require("../db/models/transaction");
+const Product = require("../db/models/product");
 
-//GET api/carts/:id
+//GET api/carts/user/:userId
 
-router.get('/:orderId', async (req, res, next) => {
+router.get("/user/:userId", async (req, res, next) => {
   try {
     res.send(
-      await Order.findByPk(req.params.orderId, {
-        include: Product,
-      })
+      await Order.locateActiveOrder(req.params.userId)
     );
   } catch (error) {
     next(error);
@@ -20,16 +18,58 @@ router.get('/:orderId', async (req, res, next) => {
 
 //POST /api/carts
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    const { newUser, transactions } = req.body;
+    const {userId} = req.body;
     const newOrder = await Order.create();
-    const { username, email, password } = newUser;
-    await newOrder.assignNewUser(username, email, password);
-    await newOrder.assignTransactions(transactions);
+    const user = await User.findByPk(userId)
+    await newOrder.setUser(user)
     res.status(201).send(newOrder);
   } catch (error) {
     next(error);
+  }
+});
+
+//PUT /api/carts/:id
+
+router.put("/:orderId", async (req, res, next) => {
+  try {
+    const { orderId, productId, quantity, totalPrice } = req.body;
+    const transactions = await Transaction.findAll();
+    transactions.map((transaction) => {
+      if (
+        transaction.dataValues.orderId === orderId &&
+        transaction.dataValues.productId === productId
+      ) {
+        transaction.update({quantity, totalPrice});
+        res.send(transaction).status(201);
+        return;
+      }
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+//DELETE /api/carts/:id
+
+router.delete("/:orderId", async (req, res, next) => {
+  try {
+    const { orderId, productId } = req.body;
+    const transactions = await Transaction.findAll();
+    transactions.forEach((transaction) => {
+      if (
+        transaction.productId === productId &&
+        transaction.orderId === orderId
+      ) {
+        transaction.destroy();
+        res.sendStatus(204);
+        return;
+      }
+    });
+    res.send("No Transaction with such paramaters!!!");
+  } catch (err) {
+    next(err);
   }
 });
 

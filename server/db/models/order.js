@@ -35,11 +35,25 @@ Order.prototype.assignTransactions = async function (transactionsObj) {
     });
   });
 };
+
+Order.prototype.closeOrder = function () {
+  return this.update({isActive: false})
+}
+
 /**
  * classMethods
  */
-// no class methods for now, but we will add them here if we need any
-/**
- * hooks
- */
-// no class methods for now, but we will add them here if we need any
+
+Order.locateActiveOrder =  async function (userId) {
+  const orderData = await this.findAll({
+    where : {
+      isActive : true,
+      userId : userId
+    }
+  })
+  const activeOrder = orderData[0]
+    ? orderData[0].dataValues
+    : null;
+  return activeOrder;
+}
+

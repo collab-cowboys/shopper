@@ -1,17 +1,18 @@
-import axios from "axios";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import history from "../history";
+import axios from 'axios';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import history from '../history';
+import { assignOrder } from './order';
 
-const TOKEN = "token";
+const TOKEN = 'token';
 
 /**
  * THUNK CREATORS
  */
-export const me = createAsyncThunk("auth/me", async () => {
+export const me = createAsyncThunk('auth/me', async () => {
   try {
     const token = window.localStorage.getItem(TOKEN);
     if (token) {
-      const res = await axios.get("/auth/me", {
+      const res = await axios.get('/auth/me', {
         headers: {
           authorization: token,
         },
@@ -24,17 +25,18 @@ export const me = createAsyncThunk("auth/me", async () => {
 });
 
 export const authenticate = createAsyncThunk(
-  "auth/authenticate",
+  'auth/authenticate',
   async (arg, thunkAPI) => {
     const { username, password, formName: method, email } = arg;
     const { dispatch } = thunkAPI;
     try {
       const res =
-        method === "signup"
+        method === 'signup'
           ? await axios.post(`/auth/${method}`, { username, password, email })
           : await axios.post(`/auth/${method}`, { username, password });
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
+      dispatch(assignOrder({ userId: res.data.userId }));
     } catch (authError) {
       return { error: authError };
     }
@@ -42,15 +44,15 @@ export const authenticate = createAsyncThunk(
 );
 
 export const handleLogout = createAsyncThunk(
-  "auth/handleLogout",
+  'auth/handleLogout',
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
     await dispatch(logout());
-    history.push("/");
+    history.push('/');
   }
 );
 
-const logout = createAsyncThunk("auth/logout", () => {
+const logout = createAsyncThunk('auth/logout', () => {
   window.localStorage.removeItem(TOKEN);
   return {};
 });
@@ -59,7 +61,7 @@ const logout = createAsyncThunk("auth/logout", () => {
  * REDUCER
  */
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: {},
   reducers: {
     setAuth: (state, action) => {
