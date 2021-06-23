@@ -10,16 +10,13 @@ export const addItemToCart = createAsyncThunk(
       if (isLoggedIn) {
         const loggedCart = { ...cart };
         loggedCart[product.id] = parseInt(quantity);
-        console.log("loggedCart", loggedCart);
         dispatch({ type: "cartProducts/setCartProducts", payload: loggedCart });
       } else {
         const tempCart = window.localStorage.getItem("cart");
         if (tempCart) {
           const storageCart = JSON.parse(tempCart);
-          guestCart = { ...storageCart };
-          console.log(`guestCart`, guestCart);
+          let guestCart = { ...storageCart };
           guestCart[product.id] = parseInt(quantity);
-          console.log(`guestCart`, guestCart);
           const newCart = JSON.stringify(guestCart);
           window.localStorage.setItem("cart", newCart);
           dispatch({
@@ -39,7 +36,7 @@ export const getCartProducts = createAsyncThunk(
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
     try {
-      const cart = window.localStorage.getItem("cart");
+      const cartJson = window.localStorage.getItem("cart");
       if (cartJson) {
         const cartObj = JSON.parse(cartJson);
         dispatch({ type: "cartProducts/setCartProducts", payload: cartObj });
