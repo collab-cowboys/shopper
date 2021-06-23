@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const addItemToCart = createAsyncThunk(
   "cartProducts/get",
@@ -32,15 +32,43 @@ export const addItemToCart = createAsyncThunk(
 );
 
 export const getCartProducts = createAsyncThunk(
-  'cartProducts/get',
+  "cartProducts/get",
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
+    const { isLoggedIn, userId } = arg;
     try {
-      const cartJson = window.localStorage.getItem('cart');
-      if (cartJson) {
-        const cartObj = JSON.parse(cartJson);
-        dispatch({ type: 'cartProducts/setCartProducts', payload: cartObj });
+      let result = {};
+      if (isLoggedIn) {
+        const order = await axios.get(`/user/${userId}`);
+        const products = await order.getProducts();
+        console.log(`products`, products);
+        products.forEach((product) => {
+          const { name, imageUrl, cost, transaction } = product;
+          result[product.id] = {
+            name,
+            imageUrl,
+            quantity: transaction.quantity,
+            totalPrice: transaction.quantity * cost,
+          };
+        });
+      } else {
+        const cartJson = window.localStorage.getItem("cart");
+        if (cartJson) {
+          const parsedJsonCart = JSON.parse(cartJson);
+          let cartObj = { ...parsedJsonCart };
+          Object.entries(cartObj).forEach(async ([key, value]) => {
+            const { data } = await axios.get(`/api/products/${key}`);
+            const { name, imageUrl, cost } = data;
+            result[key] = {
+              name,
+              imageUrl,
+              quantity: value,
+              totalPrice: value * cost,
+            };
+          });
+        }
       }
+      dispatch({ type: "cartProducts/setCartProducts", payload: result });
     } catch (error) {
       console.log(error);
     }
@@ -48,12 +76,12 @@ export const getCartProducts = createAsyncThunk(
 );
 
 export const changeProductInCartQuantity = createAsyncThunk(
-  'cartProducts/update',
+  "cartProducts/update",
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
     const { name, changeValue } = arg;
     try {
-      const cartJson = window.localStorage.getItem('cart');
+      const cartJson = window.localStorage.getItem("cart");
       if (cartJson) {
         const cartObj = JSON.parse(cartJson);
         //loop through obj find by name(key), quantity += changeValue
@@ -64,12 +92,12 @@ export const changeProductInCartQuantity = createAsyncThunk(
           }
         });
         window.localStorage.setItem(
-          'cart',
+          "cart",
           JSON.stringify({
             ...cartObj,
           })
         );
-        dispatch({ type: 'cartProducts/setCartProducts', payload: cartObj });
+        dispatch({ type: "cartProducts/setCartProducts", payload: cartObj });
       }
     } catch (error) {
       console.log(error);
@@ -78,11 +106,11 @@ export const changeProductInCartQuantity = createAsyncThunk(
 );
 
 export const deleteCartProducts = createAsyncThunk(
-  'cartProducts/delete',
+  "cartProducts/delete",
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
     try {
-      const cartJson = window.localStorage.getItem('cart');
+      const cartJson = window.localStorage.getItem("cart");
       const { name } = arg;
       if (cartJson) {
         let cartObj = JSON.parse(cartJson);
@@ -93,12 +121,12 @@ export const deleteCartProducts = createAsyncThunk(
           }
         });
         window.localStorage.setItem(
-          'cart',
+          "cart",
           JSON.stringify({
             ...newObj,
           })
         );
-        dispatch({ type: 'cartProducts/setCartProducts', payload: newObj });
+        dispatch({ type: "cartProducts/setCartProducts", payload: newObj });
       }
     } catch (err) {
       console.log(err);
@@ -107,7 +135,7 @@ export const deleteCartProducts = createAsyncThunk(
 );
 
 const cartSlice = createSlice({
-  name: 'cartProducts',
+  name: "cartProducts",
   initialState: {},
   reducers: {
     setCartProducts: (state, action) => {
