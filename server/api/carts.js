@@ -37,7 +37,7 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:orderId", async (req, res, next) => {
   try {
-    const { orderId, productId } = req.body;
+    const { orderId, productId, quantity, totalPrice } = req.body;
     const transactions = await Transaction.findAll();
     transactions.map((transaction) => {
       if (
