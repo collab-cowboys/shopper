@@ -7,7 +7,6 @@ module.exports = router;
 router.post('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({ where: { username: req.body.username } });
-    console.log(user);
     res.send({
       token: await User.authenticate(req.body),
       userId: user.id,
