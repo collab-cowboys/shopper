@@ -33,7 +33,8 @@ router.post('/signup', async (req, res, next) => {
 
 router.get('/me', async (req, res, next) => {
   try {
-    res.send(await User.findByToken(req.headers.authorization));
+    const user = (await User.findByToken(req.headers.authorization));
+    res.send({id : user.id, isAdmin : user.isAdmin, username : user.username});
   } catch (ex) {
     next(ex);
   }
