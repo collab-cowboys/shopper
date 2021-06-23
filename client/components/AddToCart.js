@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { addItemToCart } from "../store/cart";
 import { getCartProducts } from "../store/cart";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,22 +21,17 @@ const AddToCart = (props) => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  const handleClick = (product, quantity) => {
-    const totalPrice = product.cost * quantity;
-    const newCart = JSON.stringify({
-      ...cart,
-      [product.name]: { product, quantity, totalPrice },
-    });
+  const isLoggedIn = useSelector((state) => state.auth).id !== undefined;
 
-    window.localStorage.setItem("cart", newCart);
-    dispatch(getCartProducts());
-    //todo: add logic for logged-in user
-    notify();
-  };
-  const handleChange = (evt) => {};
   return (
     <div>
-      <button type="button" onClick={() => handleClick(product, quantity)}>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch(addItemToCart({ cart, product, quantity, isLoggedIn }));
+          notify();
+        }}
+      >
         Add To Cart
       </button>
       <input
