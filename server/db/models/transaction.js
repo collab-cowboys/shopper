@@ -1,8 +1,9 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
-const axios = require("axios");
+const Sequelize = require('sequelize');
+const db = require('../db');
+const axios = require('axios');
+const Product = require('./product');
 
-const Transaction = db.define("transaction", {
+const Transaction = db.define('transaction', {
   quantity: {
     type: Sequelize.INTEGER,
     defaultValue: 1,
@@ -35,7 +36,7 @@ Transaction.findByOrderId = async function (orderId) {
       orderId: orderId,
     },
   });
-  return transactionData.dataValues;
+  return transactionData;
 };
 
 Transaction.findByOrderIdAndProductId = async function (orderId, productId) {
