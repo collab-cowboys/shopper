@@ -39,7 +39,7 @@ router.delete("/:orderId", async (req, res, next) => {
   try {
     const { orderId, productId } = req.body;
     const transactions = await Transaction.findAll();
-    transactions.map((transaction) => {
+    transactions.forEach((transaction) => {
       if (
         transaction.productId === productId &&
         transaction.orderId === orderId
