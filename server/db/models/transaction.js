@@ -46,6 +46,5 @@ Transaction.findByOrderIdAndProductId = async function (orderId, productId) {
       productId: productId,
     },
   });
-  const foundTransaction = transactionData.dataValues;
-  return foundTransaction;
+  return transactionData;
 };

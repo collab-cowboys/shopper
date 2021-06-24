@@ -38,7 +38,7 @@ const AddToCart = (props) => {
         value={quantity}
         min="1"
         max="10"
-        onChange={(evt) => setQuantity(evt.target.value)}
+        onChange={(evt) => setQuantity(parseInt(evt.target.value, 10))}
       />
       <ToastContainer
         position="top-right"
