@@ -16,7 +16,7 @@ const numberOfProducts = 20;
 const numberOfUsers = 10;
 
 async function seed() {
-  await db.sync({ force: true }); // clears db and matches models to tables
+  await db.sync(); // clears db and matches models to tables
   console.log("db synced!");
 
   // Creating Users
@@ -40,8 +40,12 @@ async function seed() {
   const prod2 = await Product.findByPk(5);
   const prod3 = await Product.findByPk(7);
 
-  await orderWithUserWithItems.addProducts([prod3], {through: {quantity: 2, totalPrice: prod3.cost * 2}});
-  await orderWithUserWithItems.addProduct(prod1, {through: {quantity: 1, totalPrice: prod1.cost * 1}});
+  await orderWithUserWithItems.addProducts([prod3], {
+    through: { quantity: 2, totalPrice: prod3.cost * 2 },
+  });
+  await orderWithUserWithItems.addProduct(prod1, {
+    through: { quantity: 1, totalPrice: prod1.cost * 1 },
+  });
 
   console.log(`seeded ${products.length} users`);
   console.log(`seeded successfully`);
