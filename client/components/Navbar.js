@@ -11,7 +11,7 @@ const Navbar = () => {
     dispatch(handleLogout());
   };
   return (
-    <div>
+    <div id="navbar">
       <h1 id="title">Grand-Shoppe</h1>
       <nav>
         {isLoggedIn ? (

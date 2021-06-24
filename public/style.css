@@ -1,3 +1,9 @@
+html,
+body {
+  margin: 0;
+  padding: 0; 
+}
+
 body {
   font-family: sans-serif;
 }
@@ -30,6 +36,18 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#app {
+  background: linear-gradient(#e2eff1, #65799b);
+}
+
+#navbar {
+  background-color: #e2eff1;
+}
+
+#footer {
+  background-color: #65799b;
+  opacity: 0.85;
 
 #title {
   margin: 0px 5px;
