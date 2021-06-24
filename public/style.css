@@ -16,6 +16,17 @@ label {
   display: block;
 }
 
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 5px;
+}
+
+nav > span {
+  display: flex;
+  justify-content: space-between;
+}
+
 nav a {
   display: inline-block;
   margin: 1em;
@@ -37,4 +48,19 @@ form div {
 #footer {
   background-color: #65799b;
   opacity: 0.85;
+
+#title {
+  margin: 0px 5px;
+}
+
+#logged-in {
+  width: 285px;
+}
+
+#login {
+  width: 250px;
+}
+
+#products {
+  width: 335px;
 }
