@@ -11,6 +11,16 @@ export const assignOrder = createAsyncThunk('userOrder/assign', async (arg) => {
   return userActiveOrder.id;
 });
 
+export const checkoutOrder = createAsyncThunk(
+  'userOrder/checkout',
+  async (arg, thunkAPI) => {
+    const { oldOrderId, userId } = arg;
+    const { dispatch } = thunkAPI;
+    await axios.put(`/api/carts/${oldOrderId}?close=true`);
+    dispatch(assignOrder({ userId }));
+  }
+);
+
 const orderSlice = createSlice({
   name: 'userOrder',
   initialState: 0,
