@@ -49,7 +49,6 @@ router.post("/user/:userId", async (req, res, next) => {
     const order = await Order.locateActiveOrder(userId);
     const { product, quantity } = req.body;
     const fetchedProduct = await Product.findByPk(product.id);
-
     await order.addProduct(fetchedProduct, {
       through: {
         quantity: quantity,
