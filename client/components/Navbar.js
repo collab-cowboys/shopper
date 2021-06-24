@@ -1,7 +1,7 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { handleLogout } from "../store";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { handleLogout } from '../store';
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
@@ -9,30 +9,39 @@ const Navbar = () => {
   const name = useSelector((state) => state.auth.username);
   const handleClick = () => {
     dispatch(handleLogout());
-  
   };
   return (
     <div>
-      <h1>Grand-Shoppe</h1>
+      <h1 id="title">Grand-Shoppe</h1>
       <nav>
         {isLoggedIn ? (
-          <span>
+          <span id="logged-in">
             {/* The navbar will show these links after you log in */}
             <span>Logged in as {name}</span>
-            <a href="#" onClick={handleClick}>
-              Logout
-            </a>
+            <button class="button is-danger" type="button">
+              <Link to="/" onClick={handleClick}>
+                Logout
+              </Link>
+            </button>
           </span>
         ) : (
-          <span>
+          <span id="login">
             {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <button class="button is-danger" type="button">
+              <Link to="/login">Login</Link>
+            </button>
+            <button class="button is-danger" type="button">
+              <Link to="/signup">Sign Up</Link>
+            </button>
           </span>
         )}
-        <span>
-          <Link to="/products">All Grandparents</Link>
-          <Link to="/cart">My Cart</Link>
+        <span id="products">
+          <button class="button is-danger" type="button">
+            <Link to="/products">All Grandparents</Link>
+          </button>
+          <button class="button is-danger" type="button">
+            <Link to="/cart">My Cart</Link>
+          </button>
         </span>
       </nav>
       <hr />
