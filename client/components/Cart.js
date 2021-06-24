@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { getCartProducts } from "../store/cart";
-import CartEntry from "./CartEntry";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getCartProducts } from '../store/cart';
+import CartEntry from './CartEntry';
+import history from '../history';
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
@@ -12,7 +13,7 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCartProducts({isLoggedIn, orderId}));
+    dispatch(getCartProducts({ isLoggedIn, orderId }));
   }, [userId]);
 
   const transactions = Object.keys(cart);
@@ -53,24 +54,15 @@ const Cart = () => {
             </tbody>
           </table>
           {isLoggedIn ? (
-            <button
-              type="button"
-              onClick={() => (window.location = "/checkedout")}
-            >
+            <button type="button" onClick={() => history.push('/checkedout')}>
               Checkout
             </button>
           ) : (
             <div>
-              <button
-                type="button"
-                onClick={() => (window.location = "/checkedout")}
-              >
+              <button type="button" onClick={() => history.push('/checkedout')}>
                 Sign Up &amp; Checkout
               </button>
-              <button
-                type="button"
-                onClick={() => (window.location = "/checkedout")}
-              >
+              <button type="button" onClick={() => history.push('/checkedout')}>
                 Checkout as Guest
               </button>
             </div>
@@ -79,7 +71,7 @@ const Cart = () => {
       ) : (
         <div>
           <p>
-            You have no items in your cart! Why not look at some of our{" "}
+            You have no items in your cart! Why not look at some of our{' '}
             <Link to="/products">product options</Link>?
           </p>
         </div>
