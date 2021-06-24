@@ -51,11 +51,26 @@ const Cart = () => {
             </tbody>
           </table>
           {isLoggedIn ? (
-            <button type="button">Checkout</button>
+            <button
+              type="button"
+              onClick={() => (window.location = "/checkedout")}
+            >
+              Checkout
+            </button>
           ) : (
             <div>
-              <button type="button">Sign Up &amp; Checkout</button>
-              <button type="button">Checkout as Guest</button>
+              <button
+                type="button"
+                onClick={() => (window.location = "/checkedout")}
+              >
+                Sign Up &amp; Checkout
+              </button>
+              <button
+                type="button"
+                onClick={() => (window.location = "/checkedout")}
+              >
+                Checkout as Guest
+              </button>
             </div>
           )}
         </div>
