@@ -49,24 +49,28 @@ export const getCartProducts = createAsyncThunk(
             totalPrice: transaction.quantity * cost,
           };
         });
+        dispatch({ type: "cartProducts/setCartProducts", payload: result });
       } else {
         const cartJson = window.localStorage.getItem("cart");
+        let tempCart = {};
         if (cartJson) {
           const parsedJsonCart = JSON.parse(cartJson);
           let cartObj = { ...parsedJsonCart };
-          Object.entries(cartObj).forEach(async ([key, value]) => {
-            const { data } = await axios.get(`/api/products/${key}`);
-            const { name, imageUrl, cost } = data;
-            result[key] = {
-              name,
-              imageUrl,
-              quantity: value,
-              totalPrice: value * cost,
-            };
-          });
+          await Promise.all(
+            Object.entries(cartObj).map(async ([key, value]) => {
+              const { data } = await axios.get(`/api/products/${key}`);
+              let { name, imageUrl, cost } = data;
+              tempCart[key] = {
+                name,
+                imageUrl,
+                quantity: value,
+                totalPrice: value * cost,
+              };
+            })
+          );
+          dispatch({ type: "cartProducts/setCartProducts", payload: tempCart });
         }
       }
-      dispatch({ type: "cartProducts/setCartProducts", payload: result });
     } catch (error) {
       console.log(error);
     }
