@@ -9,10 +9,10 @@ const Navbar = () => {
   const name = useSelector((state) => state.auth.username);
   const handleClick = () => {
     dispatch(handleLogout());
-  
+
   };
   return (
-    <div>
+    <div id="navbar">
       <h1>Grand-Shoppe</h1>
       <nav>
         {isLoggedIn ? (

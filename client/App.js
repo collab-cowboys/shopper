@@ -13,8 +13,8 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <Routes />
-      <img src="/grand-shoppe-logo.png" />
+      <Routes/>
+      <img src="/grand-shoppe-logo.png" id="footer" />
     </div>
   );
 };
