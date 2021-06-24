@@ -85,17 +85,16 @@ router.put('/:orderId', async (req, res, next) => {
   }
 });
 
-//DELETE /api/carts/:id
+//DELETE /api/carts/:id?productId=${id}
 
 router.delete('/:orderId', async (req, res, next) => {
   try {
-    const { orderId, productId } = req.body;
     const transaction = await Transaction.findByOrderIdAndProductId(
       req.params.orderId,
-      productId
+      req.query.productId
     );
     if (transaction) {
-      transaction.destroy();
+      await transaction.destroy();
       res.sendStatus(204);
       return;
     }
