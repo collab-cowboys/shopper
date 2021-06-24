@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { getSingleProduct } from '../store/singleProduct';
-import AddToCart from './AddToCart';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { getSingleProduct } from "../store/singleProduct";
+import AddToCart from "./AddToCart";
 
 const SingleProduct = (props) => {
   const product = useSelector((state) => state.singleProduct);
@@ -21,9 +21,9 @@ const SingleProduct = (props) => {
         <img src={imageUrl} alt="photo" />
         <p>The {name}</p>
         <p>
-          {age}
+          age: {age}
         </p>
-        <p>Special skills: {skills.map((skill) => skill).join(', ')}</p>
+        <p>Special skills: {skills.map((skill) => skill).join(", ")}</p>
         <p>${cost}</p>
         <p>{inStock} left in stock</p>
         <AddToCart product={product} />
