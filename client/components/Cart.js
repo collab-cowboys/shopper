@@ -6,12 +6,14 @@ import CartEntry from "./CartEntry";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const userId = useSelector((state) => state.auth.id);
+  const orderId = useSelector((state) => state.userOrder);
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCartProducts());
-  }, []);
+    dispatch(getCartProducts({isLoggedIn, orderId}));
+  }, [userId]);
 
   const transactions = Object.keys(cart);
 
@@ -37,7 +39,7 @@ const Cart = () => {
                 <th>Sum: {getSum()}</th>
               </tr>
               {transactions.map((transaction) => {
-                const { id, name, imageUrl } = cart[transaction].product;
+                const { id, name, imageUrl } = cart[transaction];
                 return (
                   <CartEntry
                     key={id}

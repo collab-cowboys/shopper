@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { addItemToCart } from "../store/cart";
-import { getCartProducts } from "../store/cart";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,7 +18,7 @@ const AddToCart = (props) => {
   const { product } = props;
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
+  const userId = useSelector((state) => state.auth.id);
   const isLoggedIn = useSelector((state) => state.auth).id !== undefined;
 
   return (
@@ -28,7 +26,7 @@ const AddToCart = (props) => {
       <button
         type="button"
         onClick={() => {
-          dispatch(addItemToCart({ cart, product, quantity, isLoggedIn }));
+          dispatch(addItemToCart({ product, quantity, isLoggedIn, userId }));
           notify();
         }}
       >

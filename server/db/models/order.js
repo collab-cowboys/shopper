@@ -45,14 +45,14 @@ Order.prototype.closeOrder = function () {
  */
 
 Order.locateActiveOrder =  async function (userId) {
-  const orderData = await this.findAll({
+  const orderData = await this.findOne({
     where : {
       isActive : true,
       userId : userId
     }
   })
-  const activeOrder = orderData[0]
-    ? orderData[0].dataValues
+  const activeOrder = orderData
+    ? orderData
     : null;
   return activeOrder;
 }
