@@ -8,7 +8,8 @@ const TOKEN = 'token';
 /**
  * THUNK CREATORS
  */
-export const me = createAsyncThunk('auth/me', async () => {
+export const me = createAsyncThunk('auth/me', async (arg, thunkAPI) => {
+  const { dispatch } = thunkAPI;
   try {
     const token = window.localStorage.getItem(TOKEN);
     if (token) {
@@ -17,6 +18,7 @@ export const me = createAsyncThunk('auth/me', async () => {
           authorization: token,
         },
       });
+      dispatch(assignOrder({ userId: res.data.id }));
       return res.data;
     }
   } catch (error) {
@@ -36,7 +38,6 @@ export const authenticate = createAsyncThunk(
           : await axios.post(`/auth/${method}`, { username, password });
       window.localStorage.setItem(TOKEN, res.data.token);
       dispatch(me());
-      dispatch(assignOrder({ userId: res.data.userId }));
     } catch (authError) {
       return { error: authError };
     }

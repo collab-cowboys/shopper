@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { checkoutOrder } from '../store/order';
 
 const CheckedOut = () => {
   const notify = () =>
-    toast.dark("⭐Purchase was a Success!⭐", {
-      position: "top-center",
+    toast.dark('⭐Purchase was a Success!⭐', {
+      position: 'top-center',
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -15,6 +17,17 @@ const CheckedOut = () => {
     });
   useEffect(() => {
     notify();
+  }, []);
+
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => !!state.auth.id);
+  const userId = useSelector((state) => state.auth.id);
+  const userOrder = useSelector((state) => state.userOrder);
+  
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(checkoutOrder({ oldOrderId: userOrder, userId }));
+    }
   }, []);
 
   return (
