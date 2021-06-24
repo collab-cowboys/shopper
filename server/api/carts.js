@@ -14,7 +14,7 @@ router.get("/user/:userId", async (req, res, next) => {
   }
 });
 
-// GET api/carts/products
+// GET api/carts/products?orderId=number
 
 router.get("/products", async (req, res, next) => {
   try {
@@ -48,7 +48,8 @@ router.post("/user/:userId", async (req, res, next) => {
     const userId = parseInt(req.params.userId, 10);
     const order = await Order.locateActiveOrder(userId);
     const { product, quantity } = req.body;
-    const fetchedProduct = await Product.findByPk(product.id)
+    const fetchedProduct = await Product.findByPk(product.id);
+
     await order.addProduct(fetchedProduct, {
       through: {
         quantity: quantity,
