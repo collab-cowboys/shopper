@@ -12,10 +12,10 @@ const Navbar = () => {
   };
   return (
     <div>
-      <h1>Grand-Shoppe</h1>
+      <h1 id="title">Grand-Shoppe</h1>
       <nav>
         {isLoggedIn ? (
-          <span>
+          <span id="logged-in">
             {/* The navbar will show these links after you log in */}
             <span>Logged in as {name}</span>
             <button class="button is-danger" type="button">
@@ -25,7 +25,7 @@ const Navbar = () => {
             </button>
           </span>
         ) : (
-          <span>
+          <span id="login">
             {/* The navbar will show these links before you log in */}
             <button class="button is-danger" type="button">
               <Link to="/login">Login</Link>
@@ -35,7 +35,7 @@ const Navbar = () => {
             </button>
           </span>
         )}
-        <span>
+        <span id="products">
           <button class="button is-danger" type="button">
             <Link to="/products">All Grandparents</Link>
           </button>
