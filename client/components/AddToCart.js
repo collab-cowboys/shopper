@@ -19,6 +19,7 @@ const AddToCart = (props) => {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.id);
+  const orderId = useSelector((state) => state.userOrder);
   const isLoggedIn = useSelector((state) => state.auth).id !== undefined;
 
   return (
@@ -26,7 +27,7 @@ const AddToCart = (props) => {
       <button
         type="button"
         onClick={() => {
-          dispatch(addItemToCart({ product, quantity, isLoggedIn, userId }));
+          dispatch(addItemToCart({ product, quantity, isLoggedIn, userId, orderId }));
           notify();
         }}
       >

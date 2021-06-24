@@ -14,7 +14,7 @@ router.get('/user/:userId', async (req, res, next) => {
   }
 });
 
-// GET api/carts/products
+// GET api/carts/products?orderId=number
 
 router.get('/products', async (req, res, next) => {
   try {
