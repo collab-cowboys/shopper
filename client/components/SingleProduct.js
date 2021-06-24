@@ -6,7 +6,7 @@ import AddToCart from './AddToCart';
 
 const SingleProduct = (props) => {
   const product = useSelector((state) => state.singleProduct);
-  let { name, age, gender, skills, cost, imageUrl, inStock } = product;
+  let { name, age, skills, cost, imageUrl, inStock } = product;
   skills = skills || [];
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -21,7 +21,7 @@ const SingleProduct = (props) => {
         <img src={imageUrl} alt="photo" />
         <p>The {name}</p>
         <p>
-          {age}, {gender}
+          {age}
         </p>
         <p>Special skills: {skills.map((skill) => skill).join(', ')}</p>
         <p>${cost}</p>
