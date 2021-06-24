@@ -66,22 +66,19 @@ router.post('/user/:userId', async (req, res, next) => {
 
 router.put('/:orderId', async (req, res, next) => {
   try {
+    const { product, quantity } = req.body;
     if (req.query.close === 'true') {
       const order = await Order.findByPk(req.params.orderId);
       await order.closeOrder();
     } else {
-      const { productId, quantity, totalPrice } = req.body;
-      const transactions = await Transaction.findAll();
-      transactions.map((transaction) => {
-        if (
-          transaction.dataValues.orderId === req.params.orderId &&
-          transaction.dataValues.productId === productId
-        ) {
-          transaction.update({ quantity, totalPrice });
+      const transaction = await Transaction.findByOrderIdAndProductId(
+          req.params.orderId,
+          product.id
+        );
+        if (transaction) {
+          transaction.update({ transaction.quantity + quantity, quantity * product.cost  });
           res.send(transaction).status(201);
-          return;
         }
-      });
     }
   } catch (err) {
     next(err);
@@ -93,18 +90,16 @@ router.put('/:orderId', async (req, res, next) => {
 router.delete('/:orderId', async (req, res, next) => {
   try {
     const { orderId, productId } = req.body;
-    const transactions = await Transaction.findAll();
-    transactions.forEach((transaction) => {
-      if (
-        transaction.productId === productId &&
-        transaction.orderId === orderId
-      ) {
-        transaction.destroy();
-        res.sendStatus(204);
-        return;
-      }
-    });
-    res.send('No Transaction with such paramaters!!!');
+    const transaction = await Transaction.findByOrderIdAndProductId(
+      req.params.orderId,
+      productId
+    );
+    if (transaction) {
+      transaction.destroy();
+      res.sendStatus(204);
+      return;
+    }
+    throw 'No Transaction with such paramaters!!!';
   } catch (err) {
     next(err);
   }
