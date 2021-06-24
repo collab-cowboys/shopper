@@ -95,26 +95,36 @@ export const changeProductInCartQuantity = createAsyncThunk(
   "cartProducts/update",
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
-    const { name, changeValue, isLoggedIn } = arg;
+    const { isLoggedIn, orderId, productId, changeValue } = arg;
     try {
-      const cartJson = window.localStorage.getItem("cart");
-      if (cartJson) {
-        const cartObj = JSON.parse(cartJson);
-        //loop through obj find by name(key), quantity += changeValue
-        Object.entries(cartObj).forEach(([key, value]) => {
-          if (key === name) {
-            value.quantity = parseInt(value.quantity, 10) + changeValue;
-            value.totalPrice = value.quantity * value.product.cost;
-          }
-        });
-        window.localStorage.setItem(
-          "cart",
-          JSON.stringify({
-            ...cartObj,
-          })
+      if (isLoggedIn) {
+        const { data: fetchedProduct } = await axios.get(
+          `/api/products/${productId}`
         );
-        dispatch({ type: "cartProducts/setCartProducts", payload: cartObj });
+        await axios.put(`/api/carts/${orderId}`, {
+          product: fetchedProduct,
+          quantity: changeValue,
+        });
+      } else {
+        const cartJson = window.localStorage.getItem("cart");
+        if (cartJson) {
+          let cartObj = JSON.parse(cartJson);
+
+          Object.entries(cartObj).forEach(([key, value]) => {
+            if (key === productId) {
+              cartObj[key] = parseInt(value, 10) + changeValue;
+              if (cartObj[key] < 0) cartObj[key] = 0;
+            }
+          });
+          window.localStorage.setItem(
+            "cart",
+            JSON.stringify({
+              ...cartObj,
+            })
+          );
+        }
       }
+      await dispatch(getCartProducts({ isLoggedIn, orderId }));
     } catch (error) {
       console.log(error);
     }

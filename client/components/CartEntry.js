@@ -22,7 +22,14 @@ const CartEntry = (props) => {
         <button
           type="button"
           onClick={() =>
-            dispatch(changeProductInCartQuantity({ name, changeValue: 1 }))
+            dispatch(
+              changeProductInCartQuantity({
+                isLoggedIn,
+                orderId,
+                productId: id,
+                changeValue: 1,
+              })
+            )
           }
         >
           +
@@ -30,7 +37,14 @@ const CartEntry = (props) => {
         <button
           type="button"
           onClick={() =>
-            dispatch(changeProductInCartQuantity({ name, changeValue: -1 }))
+            dispatch(
+              changeProductInCartQuantity({
+                isLoggedIn,
+                orderId,
+                productId: id,
+                changeValue: -1,
+              })
+            )
           }
         >
           -
