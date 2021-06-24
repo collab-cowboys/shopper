@@ -70,15 +70,19 @@ router.put('/:orderId', async (req, res, next) => {
     if (req.query.close === 'true') {
       const order = await Order.findByPk(req.params.orderId);
       await order.closeOrder();
+      return res.sendStatus(201);
     } else {
       const transaction = await Transaction.findByOrderIdAndProductId(
-          req.params.orderId,
-          product.id
-        );
-        if (transaction) {
-          await transaction.update({ quantity: transaction.quantity + quantity, totalPrice: quantity * product.cost });
-          res.send(transaction).status(201);
-        }
+        req.params.orderId,
+        product.id
+      );
+      if (transaction) {
+        await transaction.update({
+          quantity: transaction.quantity + quantity,
+          totalPrice: quantity * product.cost,
+        });
+        res.send(transaction).status(201);
+      }
     }
   } catch (err) {
     next(err);
