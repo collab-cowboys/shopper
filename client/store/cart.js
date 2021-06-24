@@ -9,7 +9,7 @@ export const addItemToCart = createAsyncThunk(
     try {
       if (isLoggedIn) {
         const { data } = await axios.get(
-          `api/carts/products?orderId=${orderId}`
+          `/api/carts/products?orderId=${orderId}`
         );
         if (data.filter((prod) => prod.id === product.id).length > 0) {
           await axios.put(`/api/carts/${orderId}`, { product, quantity });
