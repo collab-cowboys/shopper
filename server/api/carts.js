@@ -76,7 +76,7 @@ router.put('/:orderId', async (req, res, next) => {
           product.id
         );
         if (transaction) {
-          transaction.update({ transaction.quantity + quantity, quantity * product.cost  });
+          transaction.update({ quantity: transaction.quantity + quantity, totalPrice: quantity * product.cost });
           res.send(transaction).status(201);
         }
     }
