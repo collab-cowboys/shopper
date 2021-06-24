@@ -70,6 +70,7 @@ router.put("/:orderId", async (req, res, next) => {
     if (req.query.close === "true") {
       const order = await Order.findByPk(req.params.orderId);
       await order.closeOrder();
+      return res.sendStatus(201);
     } else {
       const transaction = await Transaction.findByOrderIdAndProductId(
         req.params.orderId,

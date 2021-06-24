@@ -23,10 +23,12 @@ const CheckedOut = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const userId = useSelector((state) => state.auth.id);
   const userOrder = useSelector((state) => state.userOrder);
-  
+
   useEffect(() => {
     if (isLoggedIn) {
       dispatch(checkoutOrder({ oldOrderId: userOrder, userId }));
+    } else {
+      window.localStorage.setItem('cart', '{}');
     }
   }, []);
 
