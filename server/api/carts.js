@@ -69,7 +69,7 @@ router.put('/:orderId', async (req, res, next) => {
     const { product, quantity } = req.body;
     const transaction = await Transaction.findByOrderIdAndProductId(
       req.params.orderId,
-      productId
+      product.id
     );
     if (transaction) {
       transaction.update({ quantity, totalPrice });
