@@ -7,12 +7,13 @@ import CartEntry from "./CartEntry";
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const userId = useSelector((state) => state.auth.id);
+  const orderId = useSelector((state) => state.userOrder);
   const isLoggedIn = useSelector((state) => !!state.auth.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCartProducts(isLoggedIn, userId));
-  }, []);
+    dispatch(getCartProducts({isLoggedIn, orderId}));
+  }, [userId]);
 
   const transactions = Object.keys(cart);
 

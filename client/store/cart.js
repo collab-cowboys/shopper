@@ -5,12 +5,10 @@ export const addItemToCart = createAsyncThunk(
   "cartProducts/get",
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
-    const { cart, product, quantity, isLoggedIn } = arg;
+    const { product, quantity, isLoggedIn, userId } = arg;
     try {
       if (isLoggedIn) {
-        const loggedCart = { ...cart };
-        loggedCart[product.id] = parseInt(quantity);
-        dispatch({ type: "cartProducts/setCartProducts", payload: loggedCart });
+        await axios.post(`/api/carts/user/${userId}`, { product, quantity });
       } else {
         const tempCart = window.localStorage.getItem("cart");
         if (tempCart) {
@@ -35,14 +33,14 @@ export const getCartProducts = createAsyncThunk(
   "cartProducts/get",
   async (arg, thunkAPI) => {
     const { dispatch } = thunkAPI;
-    const { isLoggedIn, userId } = arg;
+    const { isLoggedIn, orderId } = arg;
     try {
       let result = {};
       if (isLoggedIn) {
-        const order = await axios.get(`/user/${userId}`);
-        const products = await order.getProducts();
-        console.log(`products`, products);
-        products.forEach((product) => {
+        const { data: order } = await axios.get(
+          `/api/carts/products/?orderId=${orderId}`
+        );
+        order.forEach((product) => {
           const { name, imageUrl, cost, transaction } = product;
           result[product.id] = {
             name,
