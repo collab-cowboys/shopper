@@ -66,7 +66,7 @@ router.post('/user/:userId', async (req, res, next) => {
 
 router.put('/:orderId', async (req, res, next) => {
   try {
-    const { orderId, productId, quantity, totalPrice } = req.body;
+    const { product, quantity } = req.body;
     const transaction = await Transaction.findByOrderIdAndProductId(
       req.params.orderId,
       productId
