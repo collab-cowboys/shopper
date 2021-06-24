@@ -44,6 +44,7 @@ const Cart = () => {
                 return (
                   <CartEntry
                     key={id}
+                    id={id}
                     name={name}
                     imageUrl={imageUrl}
                     quantity={cart[transaction].quantity}

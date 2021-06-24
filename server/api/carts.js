@@ -1,12 +1,12 @@
-const router = require('express').Router();
-const Order = require('../db/models/order');
-const User = require('../db/models/user');
-const Transaction = require('../db/models/transaction');
-const Product = require('../db/models/product');
+const router = require("express").Router();
+const Order = require("../db/models/order");
+const User = require("../db/models/user");
+const Transaction = require("../db/models/transaction");
+const Product = require("../db/models/product");
 
 //GET api/carts/user/:userId
 
-router.get('/user/:userId', async (req, res, next) => {
+router.get("/user/:userId", async (req, res, next) => {
   try {
     res.send(await Order.locateActiveOrder(req.params.userId));
   } catch (error) {
@@ -16,7 +16,7 @@ router.get('/user/:userId', async (req, res, next) => {
 
 // GET api/carts/products?orderId=number
 
-router.get('/products', async (req, res, next) => {
+router.get("/products", async (req, res, next) => {
   try {
     const orderId = parseInt(req.query.orderId, 10);
     const order = await Order.findByPk(orderId);
@@ -29,7 +29,7 @@ router.get('/products', async (req, res, next) => {
 
 //POST /api/carts
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { userId } = req.body;
     const newOrder = await Order.create();
@@ -43,7 +43,7 @@ router.post('/', async (req, res, next) => {
 
 //POST /api/carts/user/:userId
 
-router.post('/user/:userId', async (req, res, next) => {
+router.post("/user/:userId", async (req, res, next) => {
   try {
     const userId = parseInt(req.params.userId, 10);
     const order = await Order.locateActiveOrder(userId);
@@ -64,10 +64,10 @@ router.post('/user/:userId', async (req, res, next) => {
 
 //PUT /api/carts/:id
 
-router.put('/:orderId', async (req, res, next) => {
+router.put("/:orderId", async (req, res, next) => {
   try {
     const { product, quantity } = req.body;
-    if (req.query.close === 'true') {
+    if (req.query.close === "true") {
       const order = await Order.findByPk(req.params.orderId);
       await order.closeOrder();
       return res.sendStatus(201);
@@ -77,9 +77,11 @@ router.put('/:orderId', async (req, res, next) => {
         product.id
       );
       if (transaction) {
+        const priceAdjust = quantity * product.cost;
+        const tPrice = transaction.quantity * product.cost
         await transaction.update({
           quantity: transaction.quantity + quantity,
-          totalPrice: quantity * product.cost,
+          totalPrice: tPrice + priceAdjust,
         });
         res.send(transaction).status(201);
       }
@@ -89,21 +91,20 @@ router.put('/:orderId', async (req, res, next) => {
   }
 });
 
-//DELETE /api/carts/:id
+//DELETE /api/carts/:id?productId=${id}
 
-router.delete('/:orderId', async (req, res, next) => {
+router.delete("/:orderId", async (req, res, next) => {
   try {
-    const { orderId, productId } = req.body;
     const transaction = await Transaction.findByOrderIdAndProductId(
       req.params.orderId,
-      productId
+      req.query.productId
     );
     if (transaction) {
-      transaction.destroy();
+      await transaction.destroy();
       res.sendStatus(204);
       return;
     }
-    throw 'No Transaction with such paramaters!!!';
+    throw "No Transaction with such paramaters!!!";
   } catch (err) {
     next(err);
   }

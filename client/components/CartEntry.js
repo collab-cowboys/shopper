@@ -1,9 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import {changeProductInCartQuantity, deleteCartProducts } from '../store/cart'
+import { useDispatch, useSelector } from "react-redux";
+import { changeProductInCartQuantity, deleteCartProducts } from "../store/cart";
 
 const CartEntry = (props) => {
-  const { name, imageUrl, quantity, totalPrice } = props;
+  const { name, imageUrl, quantity, totalPrice, id } = props;
+  const isLoggedIn = useSelector((state) => !!state.auth.id);
+  const orderId = useSelector((state) => state.userOrder);
   const dispatch = useDispatch();
 
   return (
@@ -17,13 +19,49 @@ const CartEntry = (props) => {
       </td>
       <td>
         <span>{quantity}</span>
-        <button type="button" onClick={() => dispatch(changeProductInCartQuantity({name, changeValue: 1}))}>+</button>
-        <button type="button" onClick={() => dispatch(changeProductInCartQuantity({name, changeValue: -1}))}>-</button>
+        <button
+          type="button"
+          onClick={() =>
+            dispatch(
+              changeProductInCartQuantity({
+                isLoggedIn,
+                orderId,
+                productId: id,
+                changeValue: 1,
+              })
+            )
+          }
+        >
+          +
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            dispatch(
+              changeProductInCartQuantity({
+                isLoggedIn,
+                orderId,
+                productId: id,
+                changeValue: -1,
+              })
+            )
+          }
+        >
+          -
+        </button>
       </td>
       <td>
         <button
           type="button"
-          onClick={() => dispatch(deleteCartProducts({ name: name }))}
+          onClick={() =>
+            dispatch(
+              deleteCartProducts({
+                isLoggedIn: isLoggedIn,
+                productId: id,
+                orderId: orderId,
+              })
+            )
+          }
         >
           X
         </button>
