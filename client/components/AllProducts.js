@@ -15,7 +15,7 @@ const AllProducts = () => {
 
   return (
     <div>
-      Check out our range of Grandroid® models:
+      <p className="subtitle">Check out our range of Grandroid® models:</p>
       <ul>
         {allProducts.map((product) => {
           return (
@@ -26,7 +26,6 @@ const AllProducts = () => {
               </Link>
               <p>${product.cost}</p>
               <AddToCart product={product} />
-
             </li>
           );
         })}

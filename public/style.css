@@ -1,7 +1,7 @@
 html,
 body {
   margin: 0;
-  padding: 0; 
+  padding: 0;
 }
 
 body {
@@ -37,6 +37,10 @@ form div {
   display: inline-block;
 }
 
+.title {
+  margin: 0px 5px;
+}
+
 #app {
   background: linear-gradient(#e2eff1, #65799b);
 }
@@ -46,11 +50,11 @@ form div {
 }
 
 #footer {
-  background-color: #65799b;
-  opacity: 0.85;
+  opacity: 1;
+}
 
-#title {
-  margin: 0px 5px;
+#nav-break {
+  background-color: #65799b;
 }
 
 #logged-in {

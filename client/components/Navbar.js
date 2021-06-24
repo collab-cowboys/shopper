@@ -12,13 +12,13 @@ const Navbar = () => {
   };
   return (
     <div id="navbar">
-      <h1 id="title">Grand-Shoppe</h1>
+      <h1 className="title">Grand-Shoppe</h1>
       <nav>
         {isLoggedIn ? (
           <span id="logged-in">
             {/* The navbar will show these links after you log in */}
             <span>Logged in as {name}</span>
-            <button class="button is-danger" type="button">
+            <button className="button is-danger" type="button">
               <Link to="/" onClick={handleClick}>
                 Logout
               </Link>
@@ -27,24 +27,24 @@ const Navbar = () => {
         ) : (
           <span id="login">
             {/* The navbar will show these links before you log in */}
-            <button class="button is-danger" type="button">
+            <button className="button is-danger" type="button">
               <Link to="/login">Login</Link>
             </button>
-            <button class="button is-danger" type="button">
+            <button className="button is-danger" type="button">
               <Link to="/signup">Sign Up</Link>
             </button>
           </span>
         )}
         <span id="products">
-          <button class="button is-danger" type="button">
+          <button className="button is-danger" type="button">
             <Link to="/products">All Grandparents</Link>
           </button>
-          <button class="button is-danger" type="button">
+          <button className="button is-danger" type="button">
             <Link to="/cart">My Cart</Link>
           </button>
         </span>
       </nav>
-      <hr />
+      <hr id="nav-break" />
     </div>
   );
 };
